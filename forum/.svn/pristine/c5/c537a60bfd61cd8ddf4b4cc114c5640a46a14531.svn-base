@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 실제 쿼리 -->
+<mapper namespace="net.mds.forum.board.BoardDAO">
+	<select id="getArticleList" parameterType="PageVO" resultType="ArticleVO" >
+		select B.*
+		from (select A.*, rownum as rnum
+		from (select 	a.art_no, a.art_title, a.art_readcount, to_char(a.art_regdate,'YYYY-MM-DD') as art_regdate, a.art_comcount, u.user_nick, a.art_good
+		 	  from 		f_article a inner join f_user u
+	  	 	  on 		a.user_no = u.user_no	
+	  	 	  where 	a.boa_no = #{boa_no}   		<!--  #{boa_no} -->
+	  	 	  order by 	a.art_no desc) A) B
+ 	 	where rnum between #{startnum} and #{endnum}
+	</select>
+	
+	<select id="getTotalCount" parameterType="int" resultType="long">
+		select count(*) as cnt
+		from f_article
+		where boa_no = #{boa_no}
+	</select>
+
+	<select id="getBoard" resultType="BoardVO">
+		select  b.boa_no, b.boa_name, u.user_name, u.user_id
+		from 	f_board b inner join f_user u
+		on 		b.user_no = u.user_no
+		where b.boa_no = #{boa_no}
+	</select>
+	
+	<select id="getboardList" parameterType="String" resultType="BoardVO">
+		select boa_no, boa_name, boa_level, boa_type, boa_url
+		from f_board
+		where boa_type = (select boa_type from f_board
+								where boa_url = #{boa_url})
+	</select>
+	
+	<select id="getArticleDetail" parameterType="ArticleVO" resultType="ArticleVO">
+		select a.art_no, a.art_title, a.art_content, a.art_regdate, a.art_readcount, a.art_good, a.art_bad, u.user_nick, a.art_comcount
+		from f_article a inner join f_user u
+		on a.user_no = u.user_no
+		where art_no = ${art_no}
+	</select>
+
+	
+	<insert id="insertArticle" parameterType="ArticleVO">
+		insert into f_article(boa_no, art_no, art_title, user_no, art_content)
+		values (#{boa_no}, seq_article.nextval, #{art_title}, #{user_no}, #{art_content})
+	</insert>
+</mapper>

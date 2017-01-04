@@ -1,0 +1,13 @@
+package net.mds.forum.comment;
+
+import java.util.List;
+
+public interface CommentDAO {
+
+	List<CommentVO> getCommentList(int art_no) throws Exception;
+
+	void insertComment(CommentVO commentVO) throws Exception;
+
+	void deleteComment(int com_no) throws Exception;
+
+}

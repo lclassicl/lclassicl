@@ -1,0 +1,26 @@
+package net.mds.forum;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import net.mds.forum.user.UserVO;
+
+@Controller
+public class MainController {
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+	
+	@RequestMapping(value = "main")
+	public String Main(HttpSession session,HttpServletRequest request) {
+//		UserVO userinfo = (UserVO)session.getAttribute("userinfo");
+//		logger.info("Main 페이지 수행중");
+//		request.setAttribute("userinfo", userinfo);
+		return "main";
+	}
+
+}

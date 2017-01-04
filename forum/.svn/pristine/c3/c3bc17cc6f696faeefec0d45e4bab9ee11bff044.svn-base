@@ -1,0 +1,127 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	<%@include file="/WEB-INF/views/header.jsp"%>
+	
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<!-- <meta name="naver-site-verification"
+	content="1d7ddb28bc89fdca522b6df34e6bac50c1050365" />
+<meta name="description"
+	content="전자담배 커뮤니티 포럼, 트레이드, 공동구매, 레시피, 모드기기, 카토마이저 등 전담 정보공유">
+<meta name="viewport" content="width=device-width">
+<meta property="og:type" content="website">
+<meta property="og:title" content="이베이프">
+<meta property="og:description"
+	content="전자담배 커뮤니티 포럼, 트레이드, 공동구매, 레시피, 모드기기, 카토마이저 등 전담 정보공유">
+<meta property="og:image" content="http://evape.kr/img/evape.png">
+<meta property="og:url" content="http://evape.kr"> -->
+<!-- <link rel="apple-touch-icon" sizes="57x57"
+	href="http://evape.kr/html/favicons/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60"
+	href="http://evape.kr/html/favicons/apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72"
+	href="http://evape.kr/html/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76"
+	href="http://evape.kr/html/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114"
+	href="http://evape.kr/html/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120"
+	href="http://evape.kr/html/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144"
+	href="http://evape.kr/html/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152"
+	href="http://evape.kr/html/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180"
+	href="http://evape.kr/html/favicons/apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png"
+	href="http://evape.kr/html/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png"
+	href="http://evape.kr/html/favicons/android-chrome-192x192.png"
+	sizes="192x192">
+<link rel="icon" type="image/png"
+	href="http://evape.kr/html/favicons/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png"
+	href="http://evape.kr/html/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="http://evape.kr/html/favicons/manifest.json">
+<link rel="canonical" href="http://evape.kr/index.php"> -->
+<!-- <meta name="msapplication-TileColor" content="#225577">
+<meta name="msapplication-TileImage"
+	content="http://evape.kr/html/favicons/mstile-144x144.png">
+<meta http-equiv="imagetoolbar" content="no">
+<meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1"> -->
+<!-- <title>자유게시판 1 페이지 | 이베이프 - 일렉트로닉 베이프 유저포럼</title> -->
+<link rel="stylesheet" href="http://evape.kr/skin/board/basic/style.css?1469839318">
+
+<!--[if lte IE 8]>
+<script src="http://evape.kr/js/html5.js"></script>
+<![endif]-->
+
+</head>
+<body>
+
+
+
+	<!-- 콘텐츠 시작 { -->
+	<div id="wrapper">
+	
+		<div id="container">
+
+			<!-- 사이드 -->
+
+			<div id="sidePannel">
+				
+				<div id="sideMenu">
+					<ul>
+						<li class="sideTitle"><strong>커뮤니티</strong></li>
+						<li><a href='/forum/board/notice'>공지사항</a></li>
+						<li class='pickup'><a href='/forum/board/free'>자유게시판</a></li>
+						<li><a href='/forum/board/qna'>질문답변</a></li>
+						<li><a href='/forum/board/tip'>팁앤가이드</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div id="mainContent">
+
+				<%@include file="./maincontext.jsp" %>
+				<!-- } 게시판 검색 끝 -->
+
+				<!-- 배너광고 -->
+				<!-- <script async
+					src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				2016/07/20 게시판목록
+				<ins class="adsbygoogle"
+					style="display: inline-block; width: 875px; height: 120px"
+					data-ad-client="ca-pub-5127498998858181" data-ad-slot="5182936408"></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script> -->
+				<!-- } 게시판 목록 끝 -->
+			</div>
+		</div>
+	</div>
+	<!-- } 콘텐츠 끝 -->
+
+
+	<!-- ie6,7에서 사이드뷰가 게시판 목록에서 아래 사이드뷰에 가려지는 현상 수정 -->
+	<!--[if lte IE 7]>
+<script>
+$(function() {
+    var $sv_use = $(".sv_use");
+    var count = $sv_use.length;
+
+    $sv_use.each(function() {
+        $(this).css("z-index", count);
+        $(this).css("position", "relative");
+        count = count - 1;
+    });
+});
+</script>
+<![endif]-->
+
+</body>
+</html>
+
+<!-- 사용스킨 : basic -->

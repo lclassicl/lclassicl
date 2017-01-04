@@ -1,0 +1,156 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="../header.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<script type="text/javascript">
+	$(document).ready(function(){
+		if('${sessionScope.userinfo.user_id}' != ''){
+			if('${sessionScope.userinfo.user_level<boa.boa_level}'=='true'){
+				location.href='/forum/permit';
+			}else{
+				
+			}
+		}else{
+			location.href='/forum/nosession';
+		}
+	});
+</script>
+</head>
+<body>
+	<!-- 콘텐츠 시작 { -->
+	<div id="wrapper">
+		<div id="container">
+
+			<!-- 사이드 -->
+
+			<div id="sidePannel">
+				<div id="sideMenu">
+					<ul>
+						<li class="sideTitle"><strong>${boa.boa_type}</strong></li>
+						<c:forEach var="vo" items="${boardList}">
+							<c:if test="${vo.boa_url==boa.boa_url}">
+								<li class='pickup'><a href="/forum/board/${vo.boa_url}">${vo.boa_name}</a></li>
+							</c:if>
+							<c:if test="${vo.boa_url!=boa.boa_url}">
+								<li><a href="/forum/board/${vo.boa_url}">${vo.boa_name}</a></li>
+							</c:if>
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
+
+			<div id="mainContent">
+
+				<h2 id="container_title">
+					<span style='vertical-align: middle'>${boa.boa_name}</span> <span
+						class="sound_only"> 목록</span> <a href="/forum/board/${boa.boa_url}?pg=${pageNation.pg}"
+						target="_blank"> <img src='/forum/resources/images/rss.png'
+						width='12' />
+					</a>
+				</h2>
+
+				<!-- 게시판 목록 시작 { -->
+				<div id="bo_list" style="width: 100%">
+
+
+					<!-- 게시판 페이지 정보 및 버튼 시작 { -->
+					<div class="bo_fx">
+						<div id="bo_list_total">
+							<span>전체 : ${pageNation.totalCount}건 ${pageNation.pg}페이지</span>
+						</div>
+						<ul class="btn_bo_user">
+							<li><a href="/forum/board/${boa.boa_url}/insert" class="btn_b02">글쓰기</a></li>
+						</ul>
+					</div>
+
+
+					<!-- } 게시판 페이지 정보 및 버튼 끝 -->
+
+					<form name="fboardlist" id="fboardlist"
+						action="./board_list_update.php"
+						onsubmit="return fboardlist_submit(this);" method="post">
+
+						<div class="tbl_head01 tbl_wrap">
+							<table>
+								<caption>자유게시판 목록</caption>
+
+								<thead>
+									<tr>
+										<th scope="col" width=70px>번호</th>
+										<th scope="col" style='text-align: center; padding-left: 8px'>제목</th>
+										<th scope="col" style='text-align: right; padding-left: 8px'>글쓴이</th>
+										<th scope="col">날짜</th>
+										<th scope="col">조회</th>
+										<th scope="col">추천</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<c:forEach var="vo" items="${pageNation.list}">
+										<tr class="">
+											<td class="" style='text-align: center'>${vo.art_no}</td>
+											<td>
+												<div>
+													<a href="/forum/board/${boa.boa_url}/${vo.art_no}">${vo.art_title}
+													<span class="cnt_cmt">
+													<c:if test="${vo.art_comcount>0}">
+														+${vo.art_comcount}
+													</c:if>
+													</span>
+													</a>
+												</div>
+											</td>
+
+											<td class="td_name sv_use">${vo.user_nick}</td>
+											<td class="td_date">${vo.art_regdate}</td>
+											<td class="td_num">${vo.art_readcount}</td>
+											<td class="td_num">${vo.art_good}</td>
+											<%-- <td class="td_num">${vo.art_bad}</td> --%>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</form>
+				</div>
+
+				${pageNation.display}
+
+				<!-- 게시판 검색 시작 { -->
+				<fieldset id="bo_sch">
+					<legend>게시물 검색</legend>
+
+					<form name="fsearch" method="get">
+						<input type="hidden" name="bo_table" value="free"> <input
+							type="hidden" name="sca" value=""> <input type="hidden"
+							name="sop" value="and">
+						<!-- <label for="sfl" lass="sound_only">검색대상</label>  -->
+						<select name="sfl" id="sfl" class="frm_input">
+							<option value="wr_subject,1">제목</option>
+							<option value="wr_subject||wr_content,1">제목+내용</option>
+							<option value="wr_content,0">댓글</option>
+							<option value="mb_id,1">회원아이디</option>
+							<option value="mb_id,0">회원아이디(댓글)</option>
+							<option value="wr_name,1">글쓴이</option>
+							<option value="wr_name,0">글쓴이(댓글)</option>
+						</select> <label for="stx" class="sound_only">검색어 <strong
+							class="sound_only"> 필수</strong>
+						</label> <input type="text" name="stx" value="" required id="stx"
+							class="frm_input required" size="15" maxlength="20"> <input
+							type="submit" value="검색" class="btn_submit">
+					</form>
+				</fieldset>
+				<!-- } 게시판 검색 끝 -->
+				<!-- } 게시판 목록 끝 -->
+			</div>
+		</div>
+	</div>
+	<!-- } 콘텐츠 끝 -->
+</body>
+</html>
+
+<!-- 사용스킨 : basic -->

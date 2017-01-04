@@ -1,0 +1,17 @@
+package net.mds.forum.board;
+
+import java.util.List;
+
+public interface BoardDAO {
+
+	void getNotice() throws Exception;
+
+	BoardVO getBoard(int boa_no) throws Exception;
+
+	List<BoardVO> getList() throws Exception;
+
+	List<ArticleVO> getArticle(PageVO pageVO) throws Exception;
+
+	long getTotalCount(int boa_no) throws Exception;
+
+}

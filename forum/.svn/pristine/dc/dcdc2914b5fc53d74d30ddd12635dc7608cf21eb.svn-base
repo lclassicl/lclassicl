@@ -1,0 +1,410 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLEncoder"%>
+<%@ page import="java.security.SecureRandom"%>
+<%@ page import="java.math.BigInteger"%>
+<%@include file="header.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<!-- <script src="resources/js/jquery.bxslider.min.js"></script>
+<link href="resources/lib/jquery.bxslider.css" rel="stylesheet" /> -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		/* $('.bxslider').bxSlider({}); */
+
+		// 	  	$.ajax({
+		// 	  		method:
+		// 	  		url:
+		// 	  		data:
+		// 	  	})
+		if ('${sessionScope.userinfo.user_id}' != '') {
+			var html = '';
+			html += '<section id="ol_after" class="ol">';
+			html += '    <header id="ol_after_hd">';
+			html += '        <h2>나의 회원정보</h2>';
+			html += '        <strong>${sessionScope.userinfo.user_nick}</strong>님 안녕하세요 :)';
+			html += '    </header>';
+			html += '    <ul id="ol_private1" class="win_private">';
+			html += '        <li>';
+			html += '            <img src="resources/images/nobody.png" width="64" height="64" />';
+			html += '        </li>';
+			html += '	<li>';
+			html += '		<a class="win_level"><strong>Lv.<b>${sessionScope.userinfo.user_level}</b></strong></a>';
+			html += '        </li>';
+			html += '	<li>';
+			html += '            <a target="_blank" class="win_point">';
+			html += '		<img src="resources/images/win_point.png" />';
+			html += '                <strong></strong>';
+			html += '            </a>';
+			html += '        </li>';
+			html += '    </ul>';
+			html += '	<ul id="ol_private2" class="win_private">';
+			html += '        <li>';
+			html += '            <a target="_blank" class="win_memo">';
+			html += '                <img src="resources/images/win_message.png" />';
+			html += '                <strong></strong>';
+			html += '            </a>';
+			html += '        </li>';
+			html += '        <li>';
+			html += '            <a href="/forum/main" target="_blank" class="win_scrap">기능구상중</a>';
+			html += '        </li>';
+			html += '    </ul>';
+			html += '    <footer id="ol_after_ft">';
+			html += '        <a href="/forum/user/userinfo" id="ol_after_info">회원정보</a>';
+			html += '        <a href="/forum/user/logout" id="ol_after_logout">로그아웃</a>';
+			html += '    </footer>';
+			html += '</section>';
+			$('#before_login').html(html);
+		}
+		//alert('${sessionScope.userinfo.user_id}');
+
+	});
+</script>
+</head>
+<body>
+	<!-- <ul class="bxslider">
+		<li><img src="resources/images/ad1.png" title="ad1"/></li>
+		<li><img src="resources/images/ad2.png" title="ad2"/></li>
+		<li><img src="resources/images/ad3.png" title="ad3"/></li>
+	</ul> -->
+
+
+	<!-- 콘텐츠 시작 { -->
+	<div id="wrapper">
+		<div id="container">
+
+			<!-- 사이드 -->
+			<div id="idx">
+
+				<div id='topBanner'>
+					<a href="/forum/main" target="_blank" ><img
+						src="http://localhost/forum/resources/images/ad.png" width="828"
+						height="150" /></a>
+				</div>
+
+				<div id="leftBox">
+					<div id="hotPlace" class="myBox">
+						<div class="myBoxIn">
+							<img src="http://localhost/forum/resources/images/volume2.png"
+								style='vertical-align: middle' /> <span
+								style='vertical-align: middle; font-weight: bold'>핫플레이스</span> <span
+								style='float: right; padding: 7px 25px 0 0;'> <input
+								type="button" title="이전" class="iconBtn icPrev"> <input
+								type="button" title="다음" class="iconBtn icNext">
+							</span>
+							<div id='topBtn'>
+								<span class="touchslider-nav-item touchslider-nav-item-current">1</span>
+							</div>
+						</div>
+						<div id="hotPlaceCon" class="touchslider-viewport">
+							<div>
+								<ul class="touchslider-item">
+									<a href='http://evape.kr/bbs/board.php?bo_table=lab&wr_id=6666'>
+										<span style='float: right; width: 206px; line-height: 1.8em'>
+											우왕 굿!
+											<p style='padding: 5px 0; font-size: .9em; color: #888'>by
+												드리퍼왕자가되고시퍼요.</p>
+									</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="rightBox">
+					<div id="centerBanner">
+						<a href="/forum/main" target="_blank" ><img
+							src="http://localhost/forum/resources/images/leeyeonhees.jpg" /></a>
+						<!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+						<!-- 2015/01/13 메인 -->
+						<!--<ins class="adsbygoogle"
+				 style="display:inline-block;width:300px;height:250px"
+				 data-ad-client="ca-pub-5127498998858181"
+				 data-ad-slot="4362747207"></ins>
+			<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>-->
+					</div>
+				</div>
+
+				<div style='clear: both; float: left; margin: 15px 0'>
+					<h2 class="sound_only">최신글</h2>
+					<!-- 최신글 시작 { -->
+					<div style="float: left;">
+
+						<!-- 신제품소식 최신글 시작 { -->
+						<div class="lt ">
+							<strong class="lt_title"><a
+								href="http://evape.kr/bbs/board.php?bo_table=new">신제품소식</a></strong>
+							<div class="lt_more">
+								<a href="http://evape.kr/bbs/board.php?bo_table=new"><span
+									class="sound_only">신제품소식</span>더보기</a>
+							</div>
+							<ul>
+								<li><a
+									href="http://evape.kr/bbs/board.php?bo_table=new&amp;wr_id=3384">HCIGAR
+										VT250 TC<span class="cnt_cmt">+4</span>
+								</a> <img src="resources/images/icon_new.gif"
+									alt="새글"> <span
+									style='float: right; color: #aaa; font-size: .9em'>
+										16:56 </span></li>
+								<li><a
+									href="http://evape.kr/bbs/board.php?bo_table=new&amp;wr_id=3379">Steamcrave
+										Aromamizer Plus<span class="cnt_cmt">+4</span>
+								</a> <img src="resources/images/icon_new.gif"
+									alt="새글"> <span
+									style='float: right; color: #aaa; font-size: .9em'>
+										14:32 </span></li>
+								<li><a
+									href="http://evape.kr/bbs/board.php?bo_table=new&amp;wr_id=3369">Kanger
+										TOGO Mini<span class="cnt_cmt">+4</span>
+								</a> <span style='float: right; color: #aaa; font-size: .9em'>
+										12-03 </span></li>
+								<li><a
+									href="http://evape.kr/bbs/board.php?bo_table=new&amp;wr_id=3368">SKYHOOK
+										RDTA BOX<span class="cnt_cmt">+3</span>
+								</a> <span style='float: right; color: #aaa; font-size: .9em'>
+										12-03 </span></li>
+								<li><a
+									href="http://evape.kr/bbs/board.php?bo_table=new&amp;wr_id=3367">Spirals
+										Tank</a> <span style='float: right; color: #aaa; font-size: .9em'>
+										12-03 </span></li>
+							</ul>
+						</div>
+						<!-- } 신제품소식 최신글 끝 -->
+					</div>
+					<div style="float: left; margin-left: 20px">
+
+						<!-- 질문답변 최신글 시작 { -->
+						<div class="lt ">
+							<strong class="lt_title"> <a
+								href="http://evape.kr/bbs/board.php?bo_table=qa">질문답변</a>
+							</strong>
+							<div class="lt_more">
+								<a href="http://evape.kr/bbs/board.php?bo_table=qa"> <span
+									class="sound_only">질문답변</span>더보기
+								</a>
+							</div>
+							<ul>
+								<li><a
+									href="http://evape.kr/bbs/board.php?bo_table=qa&amp;wr_id=236719">hiliq
+										에서 주문했는데 얼마나 걸릴까용</a> <img
+									src="resources/images/icon_new.gif"
+									alt="새글"> <span
+									style='float: right; color: #aaa; font-size: .9em'>
+										17:11 </span></li>
+								<li><a
+									href="http://evape.kr/bbs/board.php?bo_table=qa&amp;wr_id=236712">메스머
+										1.8옴으오 폐호흡하시는분있나요?<span class="cnt_cmt">+2</span>
+								</a> <img src="resources/images/icon_new.gif"
+									alt="새글"> <span
+									style='float: right; color: #aaa; font-size: .9em'>
+										16:56 </span></li>
+								<li><a
+									href="http://evape.kr/bbs/board.php?bo_table=qa&amp;wr_id=236704">코일
+										질문 드리겠습니다.<span class="cnt_cmt">+2</span>
+								</a> <img src="resources/images/icon_new.gif"
+									alt="새글"> <span
+									style='float: right; color: #aaa; font-size: .9em'>
+										16:34 </span></li>
+								<li><a
+									href="http://evape.kr/bbs/board.php?bo_table=qa&amp;wr_id=236703">치타
+										RDA 쓰시는분 계신가요?<span class="cnt_cmt">+5</span>
+								</a> <img src="resources/images/icon_new.gif"
+									alt="새글"> <span
+									style='float: right; color: #aaa; font-size: .9em'>
+										16:27 </span></li>
+								<li><a
+									href="http://evape.kr/bbs/board.php?bo_table=qa&amp;wr_id=236684">짭짤팝콘액상찾고있어요!<span
+										class="cnt_cmt">+1</span></a> <img
+									src="resources/images/icon_new.gif"
+									alt="새글"> <span
+									style='float: right; color: #aaa; font-size: .9em'>
+										15:46 </span></li>
+							</ul>
+						</div>
+						<!-- } 질문답변 최신글 끝 -->
+					</div>
+					<!-- } 최신글 끝 -->
+				</div>
+			</div>
+
+			<div id="idxMenu">
+
+				<!-- 로그인 전 아웃로그인 시작 { -->
+				<div id="before_login">
+				<section id="ol_before" class="ol">
+					<h2>회원로그인</h2>
+					<form name="foutlogin" action="/forum/user/loginAction" method="post">
+						<fieldset>
+							<input type="hidden" name="url" value="http%3A%2F%2Fevape.kr%2F">
+							<!--<label for="ol_id" id="ol_idlabel">회원아이디<strong class="sound_only">필수</strong></label>-->
+							<input type="text" id="ol_id" name="user_id" required
+								class="required" maxlength="20" placeholder="회원아이디">
+							<!--<label for="ol_pw" id="ol_pwlabel">비밀번호<strong class="sound_only">필수</strong></label>-->
+							<input type="password" name="user_pw" id="ol_pw" required
+								class="required" maxlength="20" placeholder="비밀번호"> <input
+								type="submit" id="ol_submit" value="로그인">
+							<div id="ol_svc">
+								<a href="/forum/user/register"><b>회원가입</b></a>
+								<a href="/forum/result"
+									id="ol_password_lost">정보찾기</a>
+							</div>
+<!-- 								<div id="ol_auto"> -->
+<!-- 									<input type="checkbox" name="auto_login" value="1" -->
+<!-- 										id="auto_login"> <label for="auto_login" -->
+<!-- 										id="auto_login_label">자동로그인</label> -->
+<!-- 								</div> -->
+							<div id="naver_login">
+								<%
+									String clientId = "wGEm6AoMHxTdiiebjx4x";//애플리케이션 클라이언트 아이디값";
+									String redirectURI = URLEncoder.encode("http://localhost/forum/resources/callback.jsp", "UTF-8");
+									SecureRandom random = new SecureRandom();
+									String state = new BigInteger(130, random).toString();
+									String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+									apiURL += "&client_id=" + clientId;
+									apiURL += "&redirect_uri=" + redirectURI;
+									apiURL += "&state=" + state;
+									session.setAttribute("state", state);
+								%>
+								<a href="<%=apiURL%>"><img height="50"
+									src="resources/images/login_Green2.PNG" /></a>
+							</div>
+						</fieldset>
+					</form>
+				</section>
+				</div>
+				<script>
+					$omi = $('#ol_id');
+					$omp = $('#ol_pw');
+					$omp.css('display', 'inline-block').css('width', 133);
+					$omi_label = $('#ol_idlabel');
+					$omi_label.addClass('ol_idlabel');
+					$omp_label = $('#ol_pwlabel');
+					$omp_label.addClass('ol_pwlabel');
+
+					$(function() {
+						$omi.focus(function() {
+							$omi_label.css('visibility', 'hidden');
+						});
+						$omp.focus(function() {
+							$omp_label.css('visibility', 'hidden');
+						});
+						$omi.blur(function() {
+							$this = $(this);
+							if ($this.attr('id') == "ol_id"
+									&& $this.attr('value') == "")
+								$omi_label.css('visibility', 'visible');
+						});
+						$omp.blur(function() {
+							$this = $(this);
+							if ($this.attr('id') == "ol_pw"
+									&& $this.attr('value') == "")
+								$omp_label.css('visibility', 'visible');
+						});
+
+						$("#auto_login")
+								.click(
+										function() {
+											if ($(this).is(":checked")) {
+												if (!confirm("자동로그인을 사용하시면 다음부터 회원아이디와 비밀번호를 입력하실 필요가 없습니다.\n\n공공장소에서는 개인정보가 유출될 수 있으니 사용을 자제하여 주십시오.\n\n자동로그인을 사용하시겠습니까?"))
+													return false;
+											}
+										});
+					});
+
+					function fhead_submit(f) {
+						return true;
+					}
+				</script>
+				<!-- } 로그인 전 아웃로그인 끝 -->
+
+				<div id="sideBanner">
+					<a href='/forum/main' target='_blank' > <img
+					src='http://localhost/forum/resources/images/balib.jpg'
+					width="210" height="60" /> </a> 
+					<a href='/forum/main'
+					target='_blank' > <img
+					src='http://localhost/forum/resources/images/twiceb.jpg'
+					width="210" height="60" /> </a>
+				</div>
+
+				<!-- <script async
+					src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				2015/07/23 사이드
+				<ins class="adsbygoogle"
+					style="display: inline-block; width: 210px; height: 210px"
+					data-ad-client="ca-pub-5127498998858181" data-ad-slot="3341274803"></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script> -->
+
+
+
+
+				<!--
+    <div id="donateBox">
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9D2YXFCP9XNJW" target="_blank">
+        <img src="http://evape.kr/img/donate.png" />
+        </a>
+    </div>
+	-->
+			</div>
+
+			<script>
+				jQuery(function($) {
+					$("#hotPlace").touchSlider({
+						autoplay : true,
+						delay : 10000,
+						margin : 0,
+						prev : ".myBoxIn .icPrev",
+						next : ".myBoxIn .icNext"
+					});
+				});
+
+				//전체읽음표시
+				function ajaxTotalhit() {
+					if ($(".cc").size() || g5_is_admin) {
+						$("#myBoxCon").html(
+								'<p class="ajaxLoading px100">데이터 처리중</p>');
+
+						$.ajax({
+							url : g5_url + "/html/ajax_totalhit.php",
+							dataType : "json",
+							success : function(data) {
+								if (data.result)
+									alert(data.result);
+								else
+									setTimeout(function() {
+										$("#myBoxCon").load(
+												g5_url + " #myBoxUi");
+									}, 1000);
+							}
+						});
+					} else
+						alert("이미 전체 읽음으로 표시되어 있습니다.");
+
+					return;
+				}
+
+				$(document).ready(function() {
+					//별점
+					$(".recipeRating").raty({
+						path : '/js/raty/images',
+						starHalf : 'half.png',
+						starOff : 'off.png',
+						starOn : 'on.png',
+						readOnly : true,
+						score : function() {
+							return $(this).attr('data-score');
+						}
+					});
+				});
+			</script>
+
+		</div>
+	</div>
+	<!-- } 콘텐츠 끝 -->
+	<%@include file="footer.jsp" %>
+</body>
+</html>

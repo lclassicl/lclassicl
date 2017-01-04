@@ -1,0 +1,62 @@
+package net.mds.forum.user;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping("user")
+public class UserController {
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+	@RequestMapping("login")
+	public ModelAndView login() {
+		logger.info("로그인 페이지 수행중");
+		return null;
+
+	}
+	
+	@RequestMapping(value="register",method=RequestMethod.GET)
+	public String registerGet() {
+		return "user/register";
+
+	}
+	@RequestMapping(value="register",method=RequestMethod.POST)
+	public String registerPost(HttpServletRequest request,@ModelAttribute UserVO userVO) {
+		String response = request.getParameter("g-recaptcha-response");
+		String secretKey="6Lf4Yg0UAAAAAOeLdycD4HQb_dr0ReWExZGyT0mR";
+		String url = "https://www.google.com/recaptcha/api/siteverify";
+		
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		map.add("secret", secretKey);
+		map.add("response", response);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		JsonResult jr = restTemplate.postForObject(url, map, JsonResult.class);
+		
+		logger.info(userVO.toString());
+		
+		if(jr.getSuccess()){
+			//db에 userVO넘겨서 가입 ex)userService.register(userVO);
+			logger.info("register success");
+			request.setAttribute("msg", "가입에 성공하셧습니다.");
+			request.setAttribute("url", "../main");
+			return "result";
+		}else{
+			request.setAttribute("userVO", userVO);
+			logger.info("register fail");
+			return "user/registerPost";
+		}
+	}
+}

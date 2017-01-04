@@ -1,0 +1,153 @@
+@charset "utf-8";
+
+/* 그레이스케일 */
+img.grayscale {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+, IE10 */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(100%); /* Chrome 19+ & Safari 6+ */
+    -webkit-transition: all .6s ease; /* Fade to color for Chrome and Safari */
+    -webkit-backface-visibility: hidden; /* Fix for transition flickering */
+}
+
+img.grayscale:hover {
+    filter: none;
+    -webkit-filter: grayscale(0%);
+}
+
+/* 메인 - 공통 */
+.ui-autocomplete {max-height:200px;overflow-y:auto;overflow-x:hidden}
+* html .ui-autocomplete {height:200px}
+
+#sideBanner {clear:both;width:100%;border-bottom:1px dashed #dde4e9;padding:15px 0}
+#sideBanner img {margin:1px 0}
+
+/* 메인 - 회원랭킹 */
+#rankBox {clear:both;width:100%}
+#rankBox ul {list-style:none;margin:0 0 10px;padding:5px 14px}
+#rankBox li {padding:3px 0;vertical-align:middle}
+#rankBox span {float:right}
+#rankBox .rankTitle {padding:10px 0 10px}
+#rankBox .touchslider-item {width:180px}
+#rankBtn {position:absolute;z-index:9;margin:5px 0 0 175px}
+
+/* 메인 - 설문조사 */
+#pollBox {clear:both;width:100%;border-bottom:1px dashed #dde4e9}
+#pollBox ul {list-style:none;margin:0 0 10px;padding:5px 14px}
+#pollBox li {padding:3px 0;vertical-align:middle}
+#pollBox p {padding:3px 0}
+#pollBox .pollTitle {padding:10px 0 10px}
+
+/* 메인 - 향료검색 */
+#flavorBox {clear:both;width:100%}
+#flavorBox ul {list-style:none;margin:0 0 10px;padding:5px 14px}
+#flavorBox li {padding:3px 0;vertical-align:middle}
+#flavorBox .flavorTitle {padding:10px 0 10px}
+#flavorBox #searchFlavor {margin:10px 0;width:100%}
+#flavorBox #linkFlavor {display:none}
+
+#donateBox {clear:both;width:100%;padding:5px 14px}
+
+/* 메인 - 알림센터 */
+#noticeBox {width:100%;margin-bottom:13px;background:#225577;border:1px solid #557799}
+#noticeBox th {text-align:left;padding-left:20px}
+#noticeBox th a {display:inline-block;width:100%;height:28px;color:#fff;line-height:2.2em}
+#noticeBox .not {vertical-align:middle}
+#noticeBox img {vertical-align:middle}
+#noticeBox .title {display:block;height:28px;color:#fff;line-height:2.2em}
+#noticeBox .title a {color:#fff}
+
+/* 메인 - 탑배너 */
+#topBanner {width:100%;text-align:center}
+
+#leftBox {float:left}
+#rightBox {float:right}
+
+/* 메인 - 광고 */
+#centerBanner {margin:13px 0 0 10px}
+
+/* 메인 - 내글반응 & 슬라이드 */
+.myBox {float:left;width:516px;height:248px;margin-top:13px;border:1px solid #557799;overflow:hidden}
+.myBoxInfo {background:#f5f6fa}
+.myBoxIn {width:100%;padding-left:20px;height:28px;line-height:2.2em;background:#225577;color:#fff}
+.myBoxTitle {vertical-align:middle;font-weight:bold}
+#myBoxCon {min-height:182px}
+#myBoxCon ul {line-height:2em;margin:0;padding:0}
+#myBoxCon li {list-style:none;height:25px;border-bottom:1px dashed #e9e9e9;clear:both}
+#myBoxCon li .title {clear:both;float:left;margin-left:8px;width:80%;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
+#myBoxCon li .datetime {float:right;margin-right:8px;font-size:.9em}
+#myBoxCon .cc a {color:#fff}
+#myBoxCon .cc {background:#557799;color:#fff;border-bottom:1px solid #225577}
+
+#hotPlace #topBtn {position:absolute;margin:185px 0 0 313px;color:#000;z-index:9}
+#hotPlace .touchslider-nav-item {background:#ddd;padding:2px 5px;font-size:.9em;cursor:default}
+#hotPlace .touchslider-nav-item-current {background:#225577;color:#fff}
+#hotPlaceCon ul {position:absolute;background:#fff;width:500px;height:196px;margin:0;padding:10px;overflow:hidden}
+#hotPlaceCon li {list-style:none}
+
+/* 안내문 */
+.boxInfo {float:left;font-size:.9em;color:#888888;margin:10px}
+
+/* 게시판 목록 */
+#bo_cate h2 {width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
+#bo_cate ul {margin-bottom:10px;padding-left:1px;width:808px;zoom:1}
+#bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_cate li {float:left;margin-bottom:-1px}
+#bo_cate a {display:block;position:relative;margin-left:-1px;padding:6px 0 5px;width:90px;border:1px solid #ddd;background:#f7f7f7;color:#888;text-align:center;letter-spacing:-0.1em;line-height:1.2em;cursor:pointer}
+#bo_cate a:focus, #bo_cate a:hover, #bo_cate a:active {text-decoration:none}
+#bo_cate #bo_cate_on {z-index:2;border:1px solid #565e60;background:#fff;color:#565e60;font-weight:bold}
+
+/* 레시피 계산기 */
+#recipeForm {float:right;width:300px;margin:0;padding:30px 0 0 15px;list-style:none;border-left:1px solid #e9e9e9}
+#recipeForm #recipe_status {text-align:center}
+#recipeForm li {margin-bottom:15px}
+#recipeForm #thumb_recipe {margin:0}
+#recipeForm label {vertical-align:top}
+#recipeForm .rt {display:inline-block;width:100px;text-align:left;margin-right:10px}
+#recipeForm #slider, #recipeForm #slider2 {display:inline-block;width:180px;height:5px}
+#recipeForm #view_title {text-align:center;font-weight:bold}
+#recipeForm #view_rate {text-align:center}
+
+#recipeView {float:left;width:735px;margin-top:30px}
+#recipeView p {font-size:.9em;color:#888888;margin:10px}
+#recipeView td {height:30px}
+#recipeView #addRow {margin-top:10px}
+
+/* 코일 계산기 */
+#coilForm {float:right;width:300px;margin:0;padding:30px 0 0 15px;list-style:none;border-left:1px solid #e9e9e9}
+#coilForm li {margin-bottom:15px}
+#coilForm #thumb_coil {margin:0}
+#coilForm label {vertical-align:top}
+#coilForm .rt {display:inline-block;width:100px;text-align:left;margin-right:10px}
+#coilForm #slider {display:inline-block;width:150px;margin:0 10px 0 10px;height:5px}
+#coilForm #view_title {text-align:center;font-weight:bold}
+#coilForm #view_rate {text-align:center}
+
+#coilView {float:left;width:735px;margin-top:30px}
+#coilView p {font-size:.9em;color:#888888;margin:10px}
+#coilView td {height:30px}
+#coilView #bit, #coilView #leg {display:inline-block;width:150px;margin:0 10px 0 10px;height:5px}
+
+#coil_turn .coil, #coil_turn .cleg {display: inline-block}
+#coil_turn #turn {clear:both}
+
+/* 잡동사니 */
+#etc_form {float:right;width:310px;margin:0;padding:0 0 0 30px;list-style:none;border-left:1px solid #e9e9e9}
+#etc_form li {margin:10px 0}
+#etc_view {float:left;width:680px;margin-top:30px}
+#etc_view p {font-size:.9em;color:#888888;margin:10px}
+
+.tb_evape {border-top:2px solid #225577}
+table.tb_evape th, table.tb_evape td {border-bottom:1px solid #E5E8EC;border-left:1px solid #E5E8EC;padding:12px;line-height:12px}
+table.tb_evape th {background-color:#F5F6FA}
+table.tb_evape .first {border-left:0;text-align:left}
+
+/* 계산기 공통 */
+.delRow {cursor:pointer}
+.sideBanner {padding-top:20px}
+
+/* 어바웃 이베이프 */
+#about {background:#225577;color:#fff;width:100%;min-height:880px;height:auto !important;height:880px;margin:0;padding:0;list-style:none;zoom:1}
+#about li {text-align:center;padding:20px 0}
+#about .logo img {margin:80px 0 80px 0}
+#about .title {margin:20px;font-weight:bold}
+#about .member {margin:20px;line-height:1.5em;font-size:.9em}

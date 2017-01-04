@@ -1,0 +1,147 @@
+package net.mds.forum.board;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import net.mds.forum.user.UserVO;
+
+@Controller
+@RequestMapping(value="board")
+public class BoardController {
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	
+	@Autowired
+	BoardService boardService;
+	
+	@Autowired
+	private PageNation pageNation;
+	
+	@RequestMapping(value={"","/"})
+	public String defaultboard(HttpServletRequest request){
+		request.setAttribute("url", "/forum/board/free");
+		return "redirect";
+	}
+	
+	@RequestMapping(value="{boa_url}")
+	public String board(@PathVariable String boa_url, HttpServletRequest request){
+		logger.info("board 실행중 url : "+boa_url);
+		List<BoardVO> boardList = null;
+		BoardVO boa = new BoardVO();
+		int boa_no = 0;
+		int pg = 1;
+		try {
+			boardList = boardService.getboardList(boa_url);
+			if(boardList.isEmpty()){
+				request.setAttribute("url", "javascript:history.back();");
+				request.setAttribute("msg", "잘못된 접근입니다.");
+				return "result";
+			}else{
+				for(BoardVO boardVO : boardList){
+					if(boardVO.getBoa_url().equals(boa_url)){
+						boa_no = boardVO.getBoa_no();
+						boa.setBoa_no(boa_no);
+						boa.setBoa_level(boardVO.getBoa_level());
+						boa.setBoa_name(boardVO.getBoa_name());
+						boa.setBoa_type(boardVO.getBoa_type());
+						boa.setBoa_url(boardVO.getBoa_url());
+						break;
+					}
+				}
+				if(request.getParameter("pg")!=null){
+					pg = Integer.parseInt(request.getParameter("pg"));
+				}
+				pageNation.process(boa_no, pg, boa_url);
+				request.setAttribute("pageNation", pageNation);
+				request.setAttribute("boardList", boardList);
+				request.setAttribute("boa", boa);
+			}
+		} catch (Exception e) {
+			request.setAttribute("url", "javascript:history.back();");
+			request.setAttribute("msg", "에러입니다. : "+e.toString());
+			return "result";
+		}
+		return "board/board";
+	}
+	
+	@RequestMapping(value="{boa_url}/{art_no}")
+	public String articleDetail(@PathVariable String boa_url,@PathVariable int art_no, HttpServletRequest request){
+		ArticleVO articleVO = new ArticleVO();
+		articleVO.setArt_no(art_no);
+		try {
+			boardService.plusReadCount(art_no);
+			articleVO = boardService.getArticleDetail(articleVO);
+			if(articleVO==null){
+				request.setAttribute("url", "javascript:history.back();");
+				request.setAttribute("msg", "잘못된 접근입니다.");
+				return "result";
+			}
+			request.setAttribute("articleVO", articleVO);
+			return "article/detail";
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("url", "/forum/main");
+			request.setAttribute("msg", "오류 : "+e.toString());
+			return "result";
+		}
+	}
+	
+	@RequestMapping(value="{boa_url}/insert")
+	public String insertArticleGet(@PathVariable String boa_url, HttpServletRequest request){
+		logger.info("insert get 실행중");
+		List<BoardVO> boardList = null;
+		BoardVO boa = new BoardVO();
+		try {
+			boardList = boardService.getboardList(boa_url);
+			if(boardList.isEmpty()){
+				request.setAttribute("url", "javascript:history.back();");
+				request.setAttribute("msg", "잘못된 접근입니다.");
+				return "result";
+			}else{
+				for(BoardVO boardVO : boardList){
+					if(boardVO.getBoa_url().equals(boa_url)){
+						boa.setBoa_no(boardVO.getBoa_no());
+						boa.setBoa_level(boardVO.getBoa_level());
+						boa.setBoa_name(boardVO.getBoa_name());
+						boa.setBoa_type(boardVO.getBoa_type());
+						boa.setBoa_url(boardVO.getBoa_url());
+						break;
+					}
+				}
+				request.setAttribute("boardList", boardList);
+				request.setAttribute("boa", boa);
+			}
+		} catch (Exception e) {
+			request.setAttribute("url", "javascript:history.back();");
+			request.setAttribute("msg", "에러입니다. : "+e.toString());
+			return "result";
+		}
+		return "article/insert";
+	}
+	
+	@RequestMapping(value="{boa_url}/insert",method=RequestMethod.POST)
+	public String insertArticlePost(@PathVariable String boa_url, @ModelAttribute ArticleVO articleVO, HttpSession session, HttpServletRequest request){
+		articleVO.setUser_no(((UserVO)session.getAttribute("userinfo")).getUser_no());
+		try {
+			boardService.insertArticle(articleVO);
+			request.setAttribute("url", "/forum/board/"+boa_url);
+			return "redirect";
+		} catch (Exception e) {
+			request.setAttribute("url", "javascript:history.back();");
+			request.setAttribute("msg", "에러입니다. : "+e.toString());
+			return "result";
+		}
+	}
+}

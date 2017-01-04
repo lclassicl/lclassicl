@@ -1,0 +1,59 @@
+package net.mds.forum.board;
+
+import java.io.Serializable;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BoardServiceImpl implements BoardService{
+	
+	@Autowired
+	BoardDAO boardDAO;
+
+	@Override
+	public void getNotice() throws Exception {
+		//boardDAO.getNotice();
+	}
+
+	@Override
+	public BoardVO getBoard(int boa_no) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.getBoard(boa_no);
+	}
+
+	@Override
+	public List<BoardVO> getList() throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.getList();
+	}
+
+	@Override
+	public List<ArticleVO> getArticle(PageVO pageVO) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.getArticle(pageVO);
+	}
+
+	@Override
+	public long getTotalCount(int boa_no) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.getTotalCount(boa_no);
+	}
+
+
+	@Override
+	public ArticleVO getArticleDetail(ArticleVO articleVO) throws Exception {
+		return boardDAO.getArticleDetail(articleVO);
+		
+	}
+
+
+	@Override
+	public void insertArticle(ArticleVO articleVO) throws Exception {
+		// TODO Auto-generated method stub
+		boardDAO.insertArticle(articleVO);
+	}
+
+
+}

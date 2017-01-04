@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 실제 쿼리 -->
+<mapper namespace="net.mds.forum.board.BoardDAO">
+	<select id="getArticleList" parameterType="PageVO" resultType="ArticleVO" >
+		select B.*
+		from (select A.*, rownum as rnum
+		from (select 	a.art_no, a.art_title, a.art_readcount, to_char(a.art_regdate,'YYYY-MM-DD') as art_regdate, a.art_comcount, u.user_nick, a.art_good
+		 	  from 		f_article a inner join f_user u
+	  	 	  on 		a.user_no = u.user_no	
+	  	 	  where 	a.boa_no = #{boa_no}   		<!--  #{boa_no} -->
+	  	 	  order by 	a.art_no desc) A) B
+ 	 	where rnum between #{startnum} and #{endnum}
+	</select>
+	
+	<select id="getTotalCount" parameterType="int" resultType="long">
+		select count(*) as cnt
+		from f_article
+		where boa_no = #{boa_no}
+	</select>
+
+	<select id="getBoard" resultType="BoardVO">
+		select  b.boa_no, b.boa_name, u.user_name, u.user_id
+		from 	f_board b inner join f_user u
+		on 		b.user_no = u.user_no
+		where b.boa_no = #{boa_no}
+	</select>
+	
+	<select id="getboardList" parameterType="String" resultType="BoardVO">
+		select boa_no, boa_name, boa_level, boa_type, boa_url
+		from f_board
+		where boa_type = (select boa_type from f_board
+								where boa_url = #{boa_url})
+	</select>
+	
+	<select id="getArticleDetail" parameterType="ArticleVO" resultType="ArticleVO">
+		select a.art_no, a.art_title, a.art_content, a.art_regdate, a.art_readcount, a.art_good, a.art_bad, u.user_nick, a.art_comcount ,u.user_no
+		from f_article a inner join f_user u
+		on a.user_no = u.user_no
+		where art_no = ${art_no}
+	</select>
+
+	<insert id="insertArticle" parameterType="ArticleVO">
+		insert into f_article(art_no, boa_no, art_title, user_no, art_content)
+		values (seq_article.nextval, #{boa_no}, #{art_title}, #{user_no}, #{art_content})
+	</insert>
+	
+	<update id="plusReadCount" parameterType="int">
+		update f_article set art_readcount = art_readcount + 1
+		where art_no = #{art_no}
+	</update>
+	
+	<update id="updateArticle" parameterType="ArticleVO">
+		update f_article set
+		art_title = #{art_title}, art_content = #{art_content} 
+		where art_no = #{art_no}
+	</update>
+	
+	<delete id="deleteArticle" parameterType="int">
+		delete from f_article
+		where art_no = #{art_no}
+	</delete>
+	
+	<select id="getboardListAll" resultType="BoardVO">
+		select boa_no, boa_name, boa_url
+		from f_board
+	</select>
+	
+	<select id="getArticleListFive" parameterType="int" resultType="ArticleVO">
+		select B.art_no, B.art_title, B.art_regdate, B.art_comcount
+		from(select A.*, rownum as rnum
+		   from (select art_no, art_title, to_char(art_regdate,'MM-DD') as art_regdate, art_comcount
+		            from f_article
+		            where boa_no = #{boa_no}
+		            order by art_no desc) A)B
+		where rnum between 1 and 5
+	</select>
+	
+	<select id="getsearchList" parameterType="SearchVO" resultType="ArticleVO">
+		select * from f_article
+		where ${searchCondition} like '% || ${searchKeyword} || %'
+		order by art_no desc
+	</select>
+
+	<update id="plusCommentCount" parameterType="int">
+		update f_article set art_comcount = art_comcount + 1
+		where art_no = #{art_no}
+	</update>
+	
+	<select id="getCommentCount" parameterType="int" resultType="int">
+		select art_comcount
+		from f_article
+		where art_no = #{art_no}
+	</select>
+	
+	<update id="minusCommentCount" parameterType="int">
+		update f_article set art_comcount = art_comcount-1
+		where art_no = #{art_no}
+	</update>
+</mapper>

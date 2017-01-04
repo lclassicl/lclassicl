@@ -1,0 +1,7 @@
+package net.mds.forum.board;
+
+public interface BoardDAO {
+
+	void getNotice() throws Exception;
+
+}

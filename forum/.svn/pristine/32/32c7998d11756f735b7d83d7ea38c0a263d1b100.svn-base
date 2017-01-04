@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 실제 쿼리 -->
+<mapper namespace="net.mds.forum.board.BoardDAO">
+
+
+	<select id="getList" resultType="ArticleVO">
+		select a.art_no, a.art_title, u.user_name, to_char(a.art_regdate,'YYYY-MM-DD') as art_regdate, a.art_readcount, a.art_good, a.art_bad
+		from f_article a inner join f_user u
+		on a.user_no = u.user_no
+		where boa_no = 1
+		order by a. art_no desc
+	</select>
+	
+	
+
+<!--  게시판 쿼리 -->
+
+	
+	
+	
+	
+		
+</mapper>

@@ -1,0 +1,13 @@
+package net.mds.forum.user;
+
+public interface UserDAO {
+
+	void userRegister(UserVO userVO) throws Exception;
+
+	UserVO getUser(UserVO userVO) throws Exception;
+
+	int matchUserNO(int user_no) throws Exception;
+
+	void userUpdate(UserVO userVO) throws Exception;
+	
+}

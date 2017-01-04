@@ -1,0 +1,36 @@
+package net.mds.forum;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import net.mds.forum.user.UserVO;
+
+@Controller
+public class MainController {
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+	
+	@RequestMapping(value = "main")
+	public String Main() {
+		return "main";
+	}
+	
+	@RequestMapping(value = "result")
+	public String result(HttpServletRequest request) {
+		String url="javascript:history.back();";
+		String msg="잘못된 접근입니다.";
+		request.setAttribute("url", url);
+		request.setAttribute("msg", msg);
+		
+		return "result";
+	}
+
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 실제 쿼리 -->
+<mapper namespace="net.mds.forum.comment.CommentDAO">
+	<select id="getCommentList" parameterType="int" resultType="CommentVO">
+		select c.com_no, c.com_content, to_char(c.com_regdate,'YYYY-MM-DD') as com_regdate, c.art_no, c.user_no, u.user_nick
+		from f_comment c inner join f_user u
+		on c.user_no = u.user_no
+		where c.art_no = #{art_no}
+		order by c.com_no asc
+	</select>
+	
+	<insert id="insertComment" parameterType="CommentVO">
+	insert into f_comment(com_no, com_content, art_no, user_no)
+	values(seq_com.nextval, #{com_content}, #{art_no}, #{user_no})
+	</insert>
+	
+	<delete id="deleteComment" parameterType="int">
+	delete 
+	from f_comment
+	where com_no = #{com_no}
+	</delete>
+</mapper>

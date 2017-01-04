@@ -1,0 +1,122 @@
+package net.mds.forum.user;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping(value="user")
+public class UserController {
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	@Autowired
+	UserService userService;
+	
+	@RequestMapping("/loginAction")
+	public String login(@ModelAttribute UserVO userVO,HttpSession session,HttpServletRequest request) {
+		logger.info("로그인 페이지 수행중");
+		UserVO userinfo = null;
+		logger.info(userVO.toString());
+		try {
+			userinfo = userService.getUser(userVO);
+			logger.info("로그인성공 : "+userinfo.toString());
+			session.setAttribute("userinfo", userinfo);
+			request.setAttribute("url", "../main");
+		} catch (Exception e) {
+			logger.info("로그인 실패 : "+e.toString());
+			request.setAttribute("url", "../main");
+		}
+		return "redirect";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session,HttpServletRequest request) {
+		logger.info("로그아웃");
+		session.invalidate();
+		request.setAttribute("url", "../main");
+		return "redirect";
+	}
+	
+	@RequestMapping("/userinfo")
+	public ModelAndView userinfo() {
+		logger.info("회원정보 수행중");
+		return null;
+	}
+	
+	@RequestMapping(value="/update",method=RequestMethod.GET)
+	public String updateGet(HttpSession session) {
+		logger.info("update get 수행중");
+		logger.info(session.getAttribute("userinfo")+"");
+		return "user/update";
+	}
+	
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public String updatePost(@ModelAttribute UserVO userVO,HttpServletRequest request) {
+		logger.info("update post 수행중");
+		int result = 0;
+		try {
+			result = userService.userUpdate(userVO);
+			if(result==1){
+				request.setAttribute("msg", "업데이트에 성공하셨습니다.");
+				request.setAttribute("url", "/forum/main");
+			}else{
+				request.setAttribute("msg", "업데이트에 실패하였습니다.");
+				request.setAttribute("url", "javascript:history.back();");
+			}
+		} catch (Exception e) {
+			request.setAttribute("msg", "error : "+e.toString());
+			request.setAttribute("url", "javascript:history.back();");
+		}
+		return "result";
+	}
+	
+	@RequestMapping(value="/register",method=RequestMethod.GET)
+	public String registerGet() {
+		return "user/register";
+	}
+	
+	@RequestMapping(value="/register",method=RequestMethod.POST)
+	public String registerPost(HttpServletRequest request,@ModelAttribute UserVO userVO) {
+		String response = request.getParameter("g-recaptcha-response");
+		String secretKey="6Lf4Yg0UAAAAAOeLdycD4HQb_dr0ReWExZGyT0mR";
+		String url = "https://www.google.com/recaptcha/api/siteverify";
+		
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		map.add("secret", secretKey);
+		map.add("response", response);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		JsonResult jr = restTemplate.postForObject(url, map, JsonResult.class);
+		
+		logger.info(userVO.toString());
+		
+		if(jr.getSuccess()){
+			try {
+				userService.userRegister(userVO);
+				logger.info("register success");
+				request.setAttribute("msg", "가입에 성공하셧습니다.");
+				request.setAttribute("url", "../main");
+				return "result";
+			} catch (Exception e) {
+				request.setAttribute("userVO", userVO);
+				logger.info("database fail : "+e.toString());
+				return "user/registerPost";
+			}
+		}else{
+			request.setAttribute("userVO", userVO);
+			logger.info("register fail");
+			return "user/registerPost";
+		}
+	}
+}

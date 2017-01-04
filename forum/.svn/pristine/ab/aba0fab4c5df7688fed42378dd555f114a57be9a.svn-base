@@ -1,0 +1,48 @@
+package net.mds.forum.board;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping(value="board/{boa_no}/{pg}")
+public class ArticleController {
+	private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
+	
+	@Autowired
+	private BoardService boardService;
+	
+	@Autowired
+	private PageNation pageNation;
+	
+	
+	
+	@RequestMapping("/")
+	public ModelAndView Article(@PathVariable int boa_no, @PathVariable long pg) {
+		ModelAndView mav = new ModelAndView();
+		
+		try {
+			BoardVO boardVO = boardService.getBoard(boa_no);
+			
+			pageNation.process(boa_no, pg);
+			mav.setViewName("board/free");
+			mav.addObject("boardVO",boardVO);
+			mav.addObject("pageNation", pageNation);
+			return mav;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			mav.setViewName("result");
+			mav.addObject("msg", e.getMessage());
+			mav.addObject("url","./");
+			return mav;
+		}
+	}
+
+	
+}

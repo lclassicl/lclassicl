@@ -1,0 +1,236 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="/WEB-INF/views/header.jsp"%>
+<!doctype html>
+<html lang="ko">
+<head>
+<script src="<c:url value="/resources/tinymce/tinymce.min.js" />"></script>
+<script>tinymce.init({ selector:'textarea' });</script>
+
+
+<link rel="stylesheet" href="http://evape.kr/skin/board/basic/style.css?1469839318">
+
+
+</head>
+<body>
+<div id="hd_login_msg">둡두두둡님 로그인 중 <a href="http://evape.kr/bbs/logout.php">로그아웃</a></div>
+
+<!-- 콘텐츠 시작 { -->
+<div id="wrapper">
+    
+
+<div id="mainContent">
+<!-- skin : basic -->
+<section id="bo_w">
+    <h2 id="container_title">자유게시판 글쓰기</h2>
+
+    <!-- 게시물 작성/수정 시작 { -->
+<form name="fwrite" id="fwrite" action="https://evape.kr/bbs/write_update.php" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:100%">
+    <!-- <input type="hidden" name="uid" value="2016121209313881">
+    <input type="hidden" name="w" value="">
+    <input type="hidden" name="bo_table" value="free">
+    <input type="hidden" name="wr_id" value="0">
+    <input type="hidden" name="sca" value="">
+    <input type="hidden" name="sfl" value="">
+    <input type="hidden" name="stx" value="">
+    <input type="hidden" name="spt" value="">
+    <input type="hidden" name="sst" value="">
+    <input type="hidden" name="sod" value="">
+    <input type="hidden" name="page" value="">
+    <input type="hidden" name="wr_18" value="0"> -->
+
+    <input type="hidden" value="html1" name="html">
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+	        <tbody>       
+	           	<input type="hidden" name="wr_link1" value="" id="wr_link1" />
+	            <tr>
+	           		<th scope="row">
+	           			<label for="wr_link2">기타옵션</label>
+           			</th>
+	       		    <td>
+						<input type="checkbox" name="wr_link2" value="back" >
+						<label for="wr_link2">후방주의</label>
+					</td>
+	        	</tr>
+				<input type="hidden" name="wr_homepage" value="">
+	        	<tr>
+	            	<th scope="row">
+	            		<label for="wr_subject">제목<strong class="sound_only">필수</strong></label>
+	           		</th>
+	            	<td>
+	               		<div id="autosave_wrapper">
+		                    <input type="text" name="wr_subject" value="" id="wr_subject" required class="frm_input required" size="50" maxlength="255">
+	                        	<script src="http://evape.kr/js/autosave.js"></script>
+		                    	<script src="http://evape.kr/plugin/editor/smarteditor2/autosave.editor.js"></script>
+		                    	<button type="button" id="btn_autosave" class="btn_frmline">임시 저장된 글 (<span id="autosave_count">0</span>)</button>
+		                    <div id="autosave_pop">
+		                        <strong>임시 저장된 글 목록</strong>
+		                        <div>
+		                        	<button type="button" class="autosave_close">
+		                        		<img src="http://evape.kr/skin/board/basic/img/btn_close.gif" alt="닫기">
+		                        	</button>
+	                        	</div>
+		                        <ul></ul>
+		                        <div>
+		                        	<button type="button" class="autosave_close">
+		                        		<img src="http://evape.kr/skin/board/basic/img/btn_close.gif" alt="닫기">
+		                        	</button>
+	                        	</div>
+		                    </div>
+	                    </div>
+	            	</td>
+	        	</tr>
+	
+				<tr>
+					<td class="wr_content" colspan="2">
+						<textarea>Easy (and free!) You should check out our premium features.</textarea>
+					</td>
+				</tr>	
+                
+                <tr>
+	            	<th scope="row">파일 #1</th>
+	            	<td>
+	                	<input type="file" name="bf_file[]" title="파일첨부 1 : 용량 10,485,760 바이트 이하만 업로드 가능" class="frm_file frm_input">
+                    </td>
+	        	</tr>
+                
+                <tr>
+	            	<th scope="row">파일 #2</th>
+	            	<td>
+	                	<input type="file" name="bf_file[]" title="파일첨부 2 : 용량 10,485,760 바이트 이하만 업로드 가능" class="frm_file frm_input">
+	                </td>
+	        	</tr>
+	            
+	            <tr>
+	            	<th scope="row">파일 #3</th>
+	            	<td>
+	               		<input type="file" name="bf_file[]" title="파일첨부 3 : 용량 10,485,760 바이트 이하만 업로드 가능" class="frm_file frm_input">
+	                </td>
+  		        </tr>
+	                
+                <tr>
+	            	<th scope="row">파일 #4</th>
+	            	<td>
+	                	<input type="file" name="bf_file[]" title="파일첨부 4 : 용량 10,485,760 바이트 이하만 업로드 가능" class="frm_file frm_input">
+	                </td>
+	        	</tr>
+                
+                <tr>
+	            	<th scope="row">파일 #5</th>
+	            	<td>
+	                	<input type="file" name="bf_file[]" title="파일첨부 5 : 용량 10,485,760 바이트 이하만 업로드 가능" class="frm_file frm_input">
+	                </td>
+	        	</tr>
+	        </tbody>
+        </table>
+    </div>
+
+	<div class="btn_confirm">
+	    <input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit">
+	    <a href="./board.php?bo_table=free" class="btn_cancel">취소</a>
+	</div>
+</form>
+
+    <script>
+        function html_auto_br(obj)
+    {
+        if (obj.checked) {
+            result = confirm("자동 줄바꿈을 하시겠습니까?\n\n자동 줄바꿈은 게시물 내용중 줄바뀐 곳을<br>태그로 변환하는 기능입니다.");
+            if (result)
+                obj.value = "html2";
+            else
+                obj.value = "html1";
+        }
+        else
+            obj.value = "";
+    }
+
+    function fwrite_submit(f)
+    {
+        var wr_content_editor_data = oEditors.getById['wr_content'].getIR();
+oEditors.getById['wr_content'].exec('UPDATE_CONTENTS_FIELD', []);
+if(jQuery.inArray(document.getElementById('wr_content').value.toLowerCase().replace(/^\s*|\s*$/g, ''), ['&nbsp;','<p>&nbsp;</p>','<p><br></p>','<div><br></div>','<p></p>','<br>','']) != -1){document.getElementById('wr_content').value='';}
+if (!wr_content_editor_data || jQuery.inArray(wr_content_editor_data.toLowerCase(), ['&nbsp;','<p>&nbsp;</p>','<p><br></p>','<p></p>','<br>']) != -1) { alert("내용을 입력해 주십시오."); oEditors.getById['wr_content'].exec('FOCUS'); return false; }
+
+        var subject = "";
+        var content = "";
+		var limit = "";
+        $.ajax({
+            url: g5_bbs_url+"/ajax.filter.php",
+            type: "POST",
+            data: {
+                "subject": f.wr_subject.value,
+                "content": f.wr_content.value
+            },
+            dataType: "json",
+            async: false,
+            cache: false,
+            success: function(data, textStatus) {
+                subject = data.subject;
+                content = data.content;
+				limit = data.limit;
+            }
+        });
+
+		var sellerTable = ['seller', 'seller2', 'stock'];
+		if ($.inArray(g5_bo_table, sellerTable) >= 0)
+		{
+			Char2byte = f.wr_subject.value.replace(/[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7AFa-zA-Z0-9~`!@#$%^&*()+\-.:;,_<>?\[\]\{\}/'" ]+/, '');
+			if (Char2byte)
+			{
+				alert("제목에 2byte 특수문자를 입력할 수 없습니다.");
+				f.wr_subject.focus();
+				return false;
+			}
+		}
+
+        if (subject) {
+            alert("제목에 금지단어('"+subject+"')가 포함되어있습니다");
+            f.wr_subject.focus();
+            return false;
+        }
+
+        if (content) {
+            alert("내용에 금지단어('"+content+"')가 포함되어있습니다");
+            if (typeof(ed_wr_content) != "undefined")
+                ed_wr_content.returnFalse();
+            else
+                f.wr_content.focus();
+            return false;
+        }
+
+		if (limit)
+		{
+			alert(limit);
+			return false;
+		}
+
+        if (document.getElementById("char_count")) {
+            if (char_min > 0 || char_max > 0) {
+                var cnt = parseInt(check_byte("wr_content", "char_count"));
+                if (char_min > 0 && char_min > cnt) {
+                    alert("내용은 "+char_min+"글자 이상 쓰셔야 합니다.");
+                    return false;
+                }
+                else if (char_max > 0 && char_max < cnt) {
+                    alert("내용은 "+char_max+"글자 이하로 쓰셔야 합니다.");
+                    return false;
+                }
+            }
+        }
+
+        
+        document.getElementById("btn_submit").disabled = "disabled";
+
+        return true;
+    }
+    </script>
+</section>
+<!-- } 게시물 작성/수정 끝 -->	</div>    </div>
+</div>
+<!-- } 콘텐츠 끝 -->
+
+</body>
+</html>

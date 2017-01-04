@@ -1,0 +1,5 @@
+package net.mds.forum.comment;
+
+public class CommentService implements CommentDAO{
+
+}

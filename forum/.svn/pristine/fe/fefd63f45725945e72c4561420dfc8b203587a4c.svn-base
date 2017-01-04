@@ -1,0 +1,24 @@
+package net.mds.forum.comment;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(value="board/{boa_url}/{art_no}/")
+public class CommentController {
+	
+	
+	/*@RequestMapping(value = "/commentlist")
+	public String getCommentList() {
+		CommentVO commentVO = new CommentVO();
+		List<CommentVO> commentList = commentService.getCommentList(commentVO);
+		
+		return null;
+		
+	}*/
+	
+
+}

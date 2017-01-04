@@ -1,0 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+	  	if('${sessionScope.userinfo.user_id}' != ''){
+	  		var html = '';
+	  		html += '<form action="/forum/user/update" method="post">';
+	  		html += '	<input type="text" value="${sessionScope.userinfo.user_id}" name="user_id"/>';
+	  		html += '	<input type="submit" value="완료"/>';
+	  		html += '</form>';
+	  		$('#user').html(html);
+	  	}else{
+// 	  		$.ajax({
+// 	  			method:'get',
+// 	  			url:'../result',
+// 	  			data:{
+// 	  				url:'main',
+// 	  				msg:'세션이 존재하지 않습니다. 로그인해주세요.'
+// 	  			}
+// 	  		});
+// 	  		location.href='../result?url=main&msg=세션이 존재하지 않습니다. 로그인해주세요.';
+			location.href='../result';
+	  	}
+	  	//alert('${sessionScope.userinfo.user_id}');
+	});
+</script>
+</head>
+<body>
+<div id="user" >
+update페이지
+</div>
+</body>
+</html>

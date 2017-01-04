@@ -1,0 +1,7 @@
+package net.mds.forum;
+
+public interface BoardService {
+
+	void getNotice() throws Exception;
+
+}

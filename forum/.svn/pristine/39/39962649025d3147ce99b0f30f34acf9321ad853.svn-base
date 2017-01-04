@@ -1,0 +1,137 @@
+
+/* Drop Tables */
+
+DROP TABLE f_comment CASCADE CONSTRAINTS;
+DROP TABLE f_article CASCADE CONSTRAINTS;
+DROP TABLE f_board CASCADE CONSTRAINTS;
+DROP TABLE f_user CASCADE CONSTRAINTS;
+
+
+
+/* Drop Sequences */
+
+DROP SEQUENCE seq_article;
+DROP SEQUENCE seq_board;
+DROP SEQUENCE seq_com;
+DROP SEQUENCE seq_user;
+
+
+
+
+/* Create Sequences */
+
+CREATE SEQUENCE seq_article;
+CREATE SEQUENCE seq_board;
+CREATE SEQUENCE seq_com;
+CREATE SEQUENCE seq_user;
+
+
+
+/* Create Tables */
+
+CREATE TABLE f_article
+(
+	art_no number NOT NULL,
+	art_title varchar2(100) NOT NULL,
+	art_content clob NOT NULL,
+	art_regdate date DEFAULT sysdate NOT NULL,
+	art_readcount number(4) DEFAULT 0 NOT NULL,
+	art_good number DEFAULT 0 NOT NULL,
+	art_bad number DEFAULT 0 NOT NULL,
+	art_comcount number DEFAULT 0 NOT NULL,
+	boa_no number NOT NULL,
+	user_no number NOT NULL,
+	PRIMARY KEY (art_no)
+);
+
+
+CREATE TABLE f_board
+(
+	boa_no number NOT NULL,
+	boa_name varchar2(20) NOT NULL,
+	boa_level number(1) DEFAULT 1,
+	user_no number NOT NULL,
+	PRIMARY KEY (boa_no)
+);
+
+
+CREATE TABLE f_comment
+(
+	com_no number NOT NULL,
+	com_content varchar2(2000),
+	com_regdate date DEFAULT sysdate NOT NULL,
+	com_good number(3) DEFAULT 0 NOT NULL,
+	com_bad number(3) DEFAULT 0 NOT NULL,
+	art_no number NOT NULL,
+	user_no number NOT NULL,
+	PRIMARY KEY (com_no)
+);
+
+
+CREATE TABLE f_user
+(
+	user_no number NOT NULL,
+	user_name varchar2(128) NOT NULL,
+	user_id varchar2(20) NOT NULL UNIQUE,
+	user_nick varchar2(22) NOT NULL UNIQUE,
+	user_pw varchar2(128) NOT NULL,
+	user_level number(1) DEFAULT 1 NOT NULL,
+	user_phone varchar2(15) NOT NULL UNIQUE,
+	user_regdate date DEFAULT sysdate NOT NULL,
+	user_email varchar2(30) NOT NULL UNIQUE,
+	user_address varchar2(200) NOT NULL,
+	user_address2 varchar2(200) NOT NULL,
+	user_ip varchar2(35),
+	user_zipcode varchar2(12) NOT NULL,
+	PRIMARY KEY (user_no)
+);
+
+
+
+/* Create Foreign Keys */
+
+ALTER TABLE f_comment
+	ADD FOREIGN KEY (art_no)
+	REFERENCES f_article (art_no)
+;
+
+
+ALTER TABLE f_article
+	ADD FOREIGN KEY (boa_no)
+	REFERENCES f_board (boa_no)
+;
+
+
+ALTER TABLE f_article
+	ADD FOREIGN KEY (user_no)
+	REFERENCES f_user (user_no)
+;
+
+
+ALTER TABLE f_board
+	ADD FOREIGN KEY (user_no)
+	REFERENCES f_user (user_no)
+;
+
+
+ALTER TABLE f_comment
+	ADD FOREIGN KEY (user_no)
+	REFERENCES f_user (user_no)
+;
+
+select * from f_user
+select * from f_board
+
+alter table f_user
+drop column user_address2
+
+commit
+
+insert into f_user(user_no, user_name, user_id, user_nick, user_pw, user_level, user_phone, user_email, user_address, user_zipcode)
+values(seq_user.nextval, '얏옹','ditdhd','얏옹',1111,0,010-8888-8888,'tlqkf@naver.com', '구로구 구로3동', 01876)
+
+
+
+insert into f_board
+values(seq_board.nextval, '자유게시판', 0 , 2);
+where user_no = 0

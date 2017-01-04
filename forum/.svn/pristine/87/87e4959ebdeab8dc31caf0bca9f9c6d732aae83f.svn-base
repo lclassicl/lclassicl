@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 실제 쿼리 -->
+<mapper namespace="net.mds.forum.user.UserDAO">
+	<insert id="userRegister" parameterType="UserVO">
+	insert into f_user(
+		user_no,user_name,user_id,
+		user_nick,user_pw,user_phone,
+		user_email,user_address,user_zipcode)
+	values(
+		seq_user.nextval,#{user_name},#{user_id},
+		#{user_nick},#{user_pw},#{user_phone},
+		#{user_email},#{user_address},#{user_zipcode})
+	</insert>
+	
+	<select id="getUser" parameterType="UserVO" resultType="UserVO">
+	select 
+		user_no,
+		user_id, user_name, user_level,
+		user_nick, user_phone, user_email 
+	from f_user
+	where user_id = #{user_id} and user_pw = #{user_pw}
+	</select>
+	
+	<select id="matchUserNO" parameterType="int" resultType="int">
+	select count(*) as cnt
+	from f_user
+	where user_no = #{user_no}
+	</select>
+	
+	<update id="userUpdate" parameterType="UserVO">
+	update f_user set 
+		user_name = #{user_name}
+		,user_nick = #{user_nick}
+		,user_pw = #{user_pw}
+		,user_phone = #{user_phone}
+		,user_email = #{user_email}
+		,user_address = #{user_address}
+		,user_zipcode = #{user_zipcode}
+	where user_no = #{user_no}
+	</update>
+</mapper>

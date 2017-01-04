@@ -1,0 +1,71 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!-- 하단 시작 { -->
+<div id="ft">
+	<!-- 알림 -->
+	<div id="nofity"></div>
+
+	<script type="text/javascript">
+	/*var evape_socket = io.connect('ws://evape.kr:1024');
+	var evape_data = { 
+		mb_id:'lmh5448',
+		last:''
+	};
+	var alarm_snd = new Audio(g5_url + '/html/sound/beep.wav');
+
+	evape_socket.emit("checkData", evape_data);
+
+    // 쪽지/댓글 알림
+	if (g5_is_member)	{
+        evape_socket.on('getData', function (data) {
+            if(data != "false") {
+                if (data.type == "memo") {
+                    message = $("<p><a href='javascript:win_memo(\"" + data.url + "\")'>[쪽지알림] " + data.title + "</a></p>").hide();
+                } else
+                    message = $("<p><a href='" + data.url + "'>[댓글알림] " + data.title + "</a></p>").hide();
+                evape_data["last"] = data.id;
+                $.post(g5_url + "/html/ajax_session.php", {"last_node": data.id});
+                //alarm_snd.play();
+                $(message).appendTo($("#nofity")).slideDown('slow').delay('10000').slideUp('slow', function() {
+                    $(this).remove();
+                });
+            }
+            evape_socket.emit('checkData', evape_data);
+        });
+	}
+
+    //새글 알림
+    //if (g5_is_admin) {
+        evape_socket.on('getNewData', function (data) {
+            if(data != "false") {
+                message = $("<p><a href='" + data.url + "'>[새글알림] " + data.title + "</a></p>").hide();
+                evape_data["last"] = data.id;
+                $.post(g5_url + "/html/ajax_session.php", {"last_node": data.id});
+                //alarm_snd.play();
+                $(message).appendTo($("#nofity")).slideDown('slow').delay('10000').slideUp('slow', function() {
+                    $(this).remove();
+                });
+            }
+        });
+    //}*/
+    </script>
+
+            <div id="copyRight">
+        <div>
+            <a class="copyRule" href="http://evape.kr/html/about.php">어바웃 핵맛</a>
+            <a class="copyRule" href="http://evape.kr/bbs/content.php?co_id=privacy">개인정보취급방침</a>
+            <a class="copyRule" href="http://evape.kr/bbs/content.php?co_id=provision">서비스이용약관</a>
+            <!--<a class="copyRule" href="http://evape.kr/bbs/formmail.php?mb_id=byunjaeil&name=%EC%9D%B4%EB%B2%A0%EC%9D%B4%ED%94%84&email=Ynl1bmphZWlsQGdtYWlsLmNvbQ==" onclick="win_email(this.href); return false;">제휴문의</a>-->
+            <a class="copyRule" href="mailto:byunjaeil@gmail.com">제휴문의</a>
+            <p class="copyInfo">
+                핵맛의 사전 동의 없이 사이트내의 일체의 정보 및 컨텐츠를 상업적 목적으로<br />
+                전재, 전송, 스크래핑 등 무단 사용할 수 없습니다.
+            </p>
+			<p class="copyRightEvape">
+            <!--사업자등록번호: 306-41-01666<br />
+			대표: 변재일<br />-->
+            Copyright &copy; <strong><a href="http://evape.kr" target="_blank">HACKMAT</a> </strong>All rights reserved.
+            </p>
+        </div>
+    </div>
+</div>

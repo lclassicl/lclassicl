@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean" 
+		p:jndiName="java:comp/env/jdbc/forumdbcp" />
+	
+	<!--mybatis board -->
+	<bean id="sqlSessionBoard" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource" 
+		p:typeAliasesPackage="net.mds.forum.board"/>
+	
+	<bean id="boardDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="net.mds.forum.board.BoardDAO"/>
+		<property name="sqlSessionFactory" ref="sqlSessionBoard" />
+	</bean>	
+	
+	<!--mybatis user -->
+	<bean id="sqlSessionUser" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource" 
+		p:typeAliasesPackage="net.mds.forum.user"/>
+	
+	<bean id="userDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="net.mds.forum.user.UserDAO"/>
+		<property name="sqlSessionFactory" ref="sqlSessionUser" />
+	</bean>	
+	
+	<!-- mybatis comment !--> 
+	<bean id="sqlSessionComment" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource" 
+		p:typeAliasesPackage="net.mds.forum.comment"/>
+	
+	<bean id="commnetDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="net.mds.forum.comment.CommentDAO"/>
+		<property name="sqlSessionFactory" ref="sqlSessionComment" />
+	</bean>	 
+	
+		<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="multipartResolver" scope="prototype" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="maxUploadSize" value="10484760" />
+	</bean>
+		
+</beans>

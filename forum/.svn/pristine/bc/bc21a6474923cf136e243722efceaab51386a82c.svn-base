@@ -1,0 +1,79 @@
+package net.mds.forum;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(value="board")
+public class BoardController {
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	@RequestMapping("/notice")
+	public void Notice() {
+		logger.info("공지사항 페이지");
+		
+	}
+	
+	@RequestMapping("/free")
+	public void FreeBoard() {
+		logger.info("자유로운 자유게시판");
+	}
+	
+	@RequestMapping("/qna")
+	public void QnABoard() {
+		logger.info("질문은 질게로");
+	}
+	
+	@RequestMapping("/tip")
+	public void TipBoard() {
+		logger.info("팁게가면 팁주나요");
+	}
+	
+	@RequestMapping("/adult")
+	public void AdultBoard() {
+		logger.info("성인만 접근 가능하지롱");
+	}
+	
+	@RequestMapping("/photo")
+	public void PhotoBoard() {
+		logger.info("사진 게시판입니다.");
+	}
+	
+	@RequestMapping("/media")
+	public void MediaBoard() {
+		logger.info("영상 게시판입니다.");
+	}
+	
+	@RequestMapping("/roadshop")
+	public void RoadShopBoard() {
+		logger.info("맛집 정보 게시판입니다.");
+	}
+	
+	@RequestMapping("/trade")
+	public void TradeBoard() {
+		logger.info("중고거래 게시판입니다.");
+	}
+	
+	@RequestMapping("/trade/buy")
+	public void TradeBoardBuy() {
+		logger.info("삽니다 게시판");
+	}
+	
+	@RequestMapping("/trade/sell")
+	public void TradeBoardSell() {
+		logger.info("팝니다 게시판");
+	}
+	
+	@RequestMapping("/favorite")
+	public void FavoriteBoard() {
+		logger.info("즐겨찾기 게시판입니다.");
+	}
+	
+	@RequestMapping("/company")
+	public void CompanyBoard() {
+		logger.info("입점 업체 게시판입니다.");
+	}
+	
+	
+}

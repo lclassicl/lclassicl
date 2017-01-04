@@ -1,0 +1,39 @@
+package net.mds.forum.user;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserServiceImpl implements UserService{
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+	
+	@Autowired
+	UserDAO userDAO;
+
+	@Override
+	public void userRegister(UserVO userVO) throws Exception {
+		System.out.println("serviceImpl userVO : "+userVO.toString());
+		userDAO.userRegister(userVO);
+	}
+
+	@Override
+	public UserVO getUser(UserVO userVO) throws Exception {
+		return userDAO.getUser(userVO);
+	}
+
+	@Override
+	public int userUpdate(UserVO userVO) throws Exception {
+		int result = 0;
+		result = userDAO.matchUserNO(userVO.getUser_no());
+		logger.info("userVO : "+userVO.toString());
+		logger.info("matchUserNO 결과값 : "+userDAO.matchUserNO(userVO.getUser_no()));
+		if(result==1){
+			userDAO.userUpdate(userVO);
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+}

@@ -1,0 +1,100 @@
+//package net.mds.forum.board;
+//
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpSession;
+//
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.ModelAttribute;
+//import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestMethod;
+//import org.springframework.web.servlet.ModelAndView;
+//
+//import net.mds.forum.user.UserVO;
+//
+//@Controller
+//@RequestMapping(value="board/{boa_no}/{pg}")
+//public class ArticleController {
+//	private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
+//	
+//	@Autowired
+//	private BoardService boardService;
+//	
+//	@Autowired
+//	private PageNation pageNation;
+//	
+//	
+//	
+//	@RequestMapping("/")
+//	public ModelAndView Article(@PathVariable int boa_no, @PathVariable long pg) {
+//		ModelAndView mav = new ModelAndView();
+//		
+//		try {
+//			BoardVO boardVO = boardService.getBoard(boa_no);
+//			
+//			pageNation.process(boa_no, pg, "");
+//			mav.setViewName("board/free");
+//			mav.addObject("boardVO",boardVO);
+//			mav.addObject("pageNation", pageNation);
+//			return mav;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			mav.setViewName("result");
+//			mav.addObject("msg", e.getMessage());
+//			mav.addObject("url","./");
+//			return mav;
+//		}
+//	}
+//	
+//	@RequestMapping(value="insert", method=RequestMethod.GET)
+//	public String insert() {
+//		return "article/insert";
+//	}
+//	
+//	@RequestMapping(value="insert", method=RequestMethod.POST)
+//	public ModelAndView insert(@PathVariable int boa_no, ArticleVO articleVO, HttpSession session, HttpServletRequest request) {
+//		
+//		logger.info(session.toString());
+//		UserVO userinfo = (UserVO) session.getAttribute("userinfo");
+//		logger.info(userinfo.toString());
+//		
+//		articleVO.setBoa_no(boa_no);
+//		articleVO.setUser_no(userinfo.getUser_no());
+//		ModelAndView mav = new ModelAndView("result");
+//		
+//		try {
+//			boardService.insertArticle(articleVO);
+//			mav.addObject("msg","SUCCESS");
+//			mav.addObject("url", "./");
+//			return mav;
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//			mav.addObject("msg","FAILURE");
+//			mav.addObject("url","./");
+//			return mav;
+//		}
+//		
+//	}
+//	
+//	@RequestMapping("/{art_no}")
+//	public ModelAndView getArticleDetail() {
+//		ArticleVO articleVO = new ArticleVO();
+//		try {
+//			articleVO = boardService.getArticleDetail(articleVO);
+//			return new ModelAndView("article/detail", "articleVO", articleVO);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//		
+//		
+//	}
+//
+//
+//	
+//}

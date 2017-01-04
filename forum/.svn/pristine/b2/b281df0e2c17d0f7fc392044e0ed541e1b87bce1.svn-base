@@ -1,0 +1,158 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="../header.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+<!-- 콘텐츠 시작 { -->
+	<div id="wrapper">
+		<div id="container">
+			<div id="container_title">회원 가입</div>
+			<!-- 회원정보 입력/수정 시작 { -->
+			<div class="mbskin">
+				<form id="fregisterform" name="fregisterform"
+					action="" method="post" >
+					<div class="tbl_frm01 tbl_wrap">
+						<table>
+							<caption>사이트 이용정보 입력</caption>
+							<tbody>
+								<tr>
+									<th scope="row">
+										<label for="reg_mb_id">아이디<strong class="sound_only">필수</strong></label>
+									</th>
+									<td>
+										<span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
+										<input type="text" name="user_id" value=""
+											id="reg_mb_id" required class="frm_input required "
+											minlength="3" maxlength="20">
+										<span id="msg_mb_id"></span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">
+										<label for="reg_mb_password">비밀번호<strong class="sound_only">필수</strong></label>
+									</th>
+									<td>
+										<input type="password" name="user_pw"
+											id="reg_mb_password" required class="frm_input required"
+											minlength="3" maxlength="20">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><label for="reg_mb_password_re">비밀번호
+											확인<strong class="sound_only">필수</strong>
+									</label></th>
+									<td><input type="password" name="user_pw_check"
+										id="reg_mb_password_re" required class="frm_input required"
+										minlength="3" maxlength="20"></td>
+								</tr>
+								<tr>
+									<th scope="row"><label for="reg_mb_nick">닉네임<strong
+											class="sound_only">필수</strong></label>
+									</th>
+									<td>
+									<input type="text" name="user_nick" value="" id="reg_mb_nick"
+										required class="frm_input required nospace" size="10"
+										maxlength="20"> <span id="msg_mb_nick"></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="tbl_frm01 tbl_wrap">
+						<table>
+							<caption>개인정보 입력</caption>
+							<tbody>
+								<tr>
+									<th scope="row"><label for="reg_mb_name">이름<strong
+											class="sound_only">필수</strong></label></th>
+									<td>
+									<input type="text" id="reg_mb_name" name="user_name"
+										value="" required class="frm_input required " size="10">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><label for="reg_mb_phone">휴대폰<strong
+											class="sound_only">필수</strong></label>
+									</th>
+									<td>
+									<input type="text" name="user_phone" value="" id="reg_mb_phone"
+										required class="frm_input required nospace">
+									<span id="msg_mb_phone"></span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><label for="reg_mb_zipcode">우편번호<strong
+											class="sound_only">필수</strong></label>
+									</th>
+									<td>
+									<input type="text" name="user_zipcode" value="" id="reg_mb_zipcode"
+										required class="frm_input required nospace">
+									<span id="msg_mb_zipcode"></span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><label for="reg_mb_address">주소<strong
+											class="sound_only">필수</strong></label>
+									</th>
+									<td>
+									<input type="text" name="user_address" value="" id="reg_mb_address"
+										required class="frm_input required nospace">
+									<span id="msg_mb_address"></span>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><label for="reg_mb_email">Email<strong
+											class="sound_only">필수</strong></label>
+									</th>
+									<td>
+									<input type="text" name="user_email" value="" id="reg_mb_email"
+										required class="frm_input required nospace" size="70" maxlength="100">
+									<span id="msg_mb_email"></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="tbl_frm01 tbl_wrap">
+						<table>
+							<caption>기타</caption>
+							<tbody>
+<!-- 								<tr> -->
+<!-- 									<th scope="row"><label for="reg_mb_profile">자기소개</label></th> -->
+<!-- 									<td><textarea name="mb_profile" id="reg_mb_profile" -->
+<!-- 											class=""></textarea></td> -->
+<!-- 								</tr> -->
+
+								<tr>
+									<th scope="row">자동등록방지</th>
+									<td>
+									<div id="recaptcha" >
+									<div class="g-recaptcha" data-sitekey="6Lf4Yg0UAAAAAGOijFzXqz1HtyV0w-m1B-6EW5Yh"></div>
+									</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="btn_confirm">
+						<input type="submit" value="확인" id="btn_submit" class="btn_submit"
+							accesskey="s">
+						<a href="/forum/main"
+							class="btn_cancel">취소</a>
+					</div>
+				</form>
+			</div>
+			<!-- } 회원정보 입력/수정 끝 -->
+		</div>
+	</div>
+</body>
+</html>

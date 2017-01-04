@@ -1,0 +1,20 @@
+forum
+forum/main - 메인페이지
+forum/board/free - 자유게시판
+forum/board/qna - 질문게시판
+forum/board/tip - 팁게시판
+forum/board/adult - 성인게시판
+forum/board/photo - 포토게시판
+forum/board/media - 영상게시판
+forum/board/trade - 거래게시판
+forum/board/roadshop - 맛집게시판
+forum/board/trade/buy - 거래(삽니다)게시판
+forum/board/trade/sell - 거래(팝니다)게시판
+forum/board/favorite - 즐겨찾기 게시판
+forum/board/company - 업체게시판
+forum/user/register - 회원가입
+forum/user/login - 회원로그인
+forum/user/loginAction - 로그인실행
+forum/user/logout - 로그아웃실행
+forum/user/userinfo - 회원정보
+forum/user/update - 회원정보수정

@@ -1,0 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
+<%@include file="board/header.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="resources/js/jquery.bxslider.min.js"></script>
+<link href="resources/lib/jquery.bxslider.css" rel="stylesheet" />
+<script type="text/javascript">
+	$(document).ready(function(){
+	  $('.bxslider').bxSlider();
+	});
+</script>
+</head>
+<body>
+
+<ul class="bxslider">
+  <li><img src="resources/images/ad1.png" title="today's 1"/></li>
+  <li><img src="resources/images/ad2.png" title="오늘의 맛집2"/></li>
+  <li><img src="resources/images/ad3.png" title="오늘의 맛집3"/></li>
+  <li><img src="resources/images/logout.PNG" title="오늘의 맛집3"/></li>
+</ul>
+<div align="right">
+	로 그 인 <input type="text"> <br/>
+	비밀번호 <input type="password"> <br/>
+	<%
+    String clientId = "wGEm6AoMHxTdiiebjx4x";//애플리케이션 클라이언트 아이디값";
+    String redirectURI = URLEncoder.encode("http://192.168.10.14/forum/resources/callback.jsp", "UTF-8");
+    SecureRandom random = new SecureRandom();
+    String state = new BigInteger(130, random).toString();
+    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+    apiURL += "&client_id=" + clientId;
+    apiURL += "&redirect_uri=" + redirectURI;
+    apiURL += "&state=" + state;
+    session.setAttribute("state", state);
+ %>
+  <a href="<%=apiURL%>"><img height="50" src="resources/images/login_big_Green.PNG"/></a>
+</div>
+
+</body>
+</html>

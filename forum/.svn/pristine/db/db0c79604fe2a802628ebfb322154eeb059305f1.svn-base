@@ -1,0 +1,142 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="/WEB-INF/views/header.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="<c:url value="/resources/tinymce/js/tinymce/tinymce.min.js" />"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+tinymce.init({
+	selector:'textarea', 
+	language: 'ko',
+	height: 500,
+    theme: 'modern',
+    plugins: [
+      'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+      'searchreplace wordcount visualblocks visualchars code fullscreen',
+      'insertdatetime media nonbreaking save table contextmenu directionality',
+      'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+    ],
+    toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    toolbar2: 'print preview media | forecolor backcolor emoticons | codesample | custom_image' ,
+    image_advtab: true,
+    templates: [
+      { title: 'Test template 1', content: 'Test 1' },
+      { title: 'Test template 2', content: 'Test 2' }
+    ],
+    content_css: [
+      '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+      '//www.tinymce.com/css/codepen.min.css'
+    ],
+    
+    setup: function(editor) {
+    	            editor.addButton('custom_image', {
+    	                        title: '이미지삽입',
+    	                        icon: 'image',
+    	                        onclick: function() {
+    	                               $("#imageUpload").modal({backdrop: "static"});
+    	                        }
+    	                    });
+    	                }
+});
+</script>
+</head>
+<body>
+<div id="wrapper">
+<div id="container">
+	<div id="sidePannel">
+		<div id="sideMenu">
+			<ul>
+				<li class="sideTitle"><strong>${boa.boa_type}</strong></li>
+				<c:forEach var="vo" items="${boardList}">
+					<c:if test="${vo.boa_url==boa.boa_url}">
+						<li class='pickup'><a href="/forum/board/${vo.boa_url}">${vo.boa_name}</a></li>
+					</c:if>
+					<c:if test="${vo.boa_url!=boa.boa_url}">
+						<li><a href="/forum/board/${vo.boa_url}">${vo.boa_name}</a></li>
+					</c:if>
+				</c:forEach>
+			</ul>
+		</div>
+	</div>
+	<div id="mainContent">
+	<br/>
+		<section id="bo_w">
+    		<h2 id="container_title">${boa.boa_name} 글쓰기</h2>
+		<form action="" method="post" autocomplete="off" style="width:100%">
+			<input type="hidden" value="${boa.boa_no}" id="boa_no" name="boa_no" />
+			<input type="hidden" value="html1" name="html" /> 
+				<div class="tbl_frm01 tbl_wrap">
+					<table>	
+						<tbody>
+							<tr>
+				            	<th scope="row">
+				            		<label for="wr_subject">제목<strong class="sound_only">필수</strong></label>
+				           		</th>
+				            	<td>
+				               		<div id="autosave_wrapper">
+					                    <input type="text" name="art_title" value="" id="wr_subject" required class="frm_input required" size="100" maxlength="255">					
+				                    </div>
+				            	</td>
+				        	</tr>
+							<tr>
+								<td class="wr_content" colspan="2">
+									<textarea name="art_content">
+										
+									</textarea>
+								</td>
+							</tr>				
+						</tbody>
+					</table>
+				</div>
+			<div>
+	    		<div class="btn_confirm">
+					<input type="submit" value="작성완료" id="btn_submit" class="btn_submit">
+					<a href="javascript:history.back();" class="btn_cancel">취소</a>
+				</div>
+			</div>			
+		</form>
+		</section>
+	</div>
+</div>
+</div>
+
+<!-- Modal -->
+	<div class="modal fade" id="imageUpload" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">×</button>
+					<h4 class="modal-title">사진 첨부하기</h4>
+				</div>
+				<div class="modal-body">
+					<form action="<c:url value="/file/upload" />" id="myform"
+						method="post" enctype="multipart/form-data">
+						<input type="file" id="upfile" name="upfile"
+							accept="image/*,video/*[, MIME_TYPES]">
+					</form>
+					<br />
+					<p>
+						10MB이하의 이미지 파일만 등록할 수 있습니다.<br /> (JPG, GIF, PNG, BMP)
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						id="btnImageUpload">업로드</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				</div>
+			</div>
+<!-- Modal content END-->
+		</div>
+	</div>
+</body>
+</html>

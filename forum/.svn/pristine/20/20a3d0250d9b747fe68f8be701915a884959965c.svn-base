@@ -1,0 +1,1353 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="../header.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<!-- <meta http-equiv="imagetoolbar" content="no"> -->
+<meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
+<link rel="stylesheet" href="/forum/resources/basic/style.css">
+<!--[if lte IE 8]>
+<script src="http://evape.kr/js/html5.js"></script>
+<![endif]-->
+
+<script src="http://evape.kr/js/jquery-1.12.3.min.js"></script>
+<script src="http://evape.kr/js/jquery-ui/jquery-ui.min.js"></script>
+<script src="http://evape.kr/js/jquery.numeric.min.js"></script>
+<script src="http://evape.kr/js/jquery.hotkeys.js"></script>
+<script src="http://evape.kr/js/jquery.qtip.js"></script>
+<script src="http://evape.kr/js/jquery.scrollUp.min.js"></script>
+<script src="http://evape.kr/js/jquery.touchslider.min.js"></script>
+<script src="http://evape.kr/html/common.js"></script>
+<!-- <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script> -->
+<script src="http://evape.kr/js/jquery.menu.js?1451279622"></script>
+<script src="http://evape.kr/js/common.js?1475132752"></script>
+<script src="http://evape.kr/js/wrest.js?1451279622"></script>
+<script src="http://evape.kr/js/jquery.easing.1.3.js"></script>
+<script src="http://evape.kr/js/jquery.easy-ticker.min.js"></script>
+<script src="http://evape.kr/js/snowfall.jquery.min.js"></script>
+</head>
+
+<body>
+<script>
+/*function tbtn()
+{
+    if ($(window).width() < 1200)
+    {
+        $('#topUp').css({
+            "margin-left": ($(window).width() - 80) + "px"
+        });
+    }
+    else
+    {
+        $('#topUp').css({
+            "margin-left": "1090px"
+        });
+    }
+    return false;
+}*/
+
+$(document).ready(function() {
+	$(window).scroll(function() {
+        if ($(document).scrollTop() < 120)
+		{
+			if ($('#gnb').hasClass('fixed'))
+            {
+				$('#gnb').removeClass('fixed');
+                $('#wrapper').css('padding-top', 0);
+                $('#new_menu').fadeIn();
+            }
+            if ($('#topUp:visible'))
+                $('#topUp').fadeOut();
+		}
+		else
+		{
+            if (!$('#gnb').hasClass('fixed'))
+            {
+			    $('#gnb').addClass('fixed');
+                $('#wrapper').css('padding-top', $('#gnb').outerHeight()) + 'px';
+                $('#new_menu').fadeOut();
+            }
+            if ($('#topUp:hidden'))
+                $('#topUp').fadeIn();
+        }
+	});
+
+    if (newmail)
+	{
+		var shake = setInterval(periodical, 2000);
+
+		$('.win_memo').click(function() {
+			clearInterval(shake);
+			$('#newmail').fadeOut('slow');
+		})
+	}
+    //tbtn();
+
+    $('#logo').snowfall({flakeCount:9, maxSpeed:1, round:true, minSize:1, maxSize:9});
+});
+
+//윈도우 리사이즈시에 탑버튼을 안으로
+/*$(window).resize(function() {
+    tbtn();
+});*/
+
+if (g5_current != "write.php")
+{
+    $(document).bind('keydown', '`', function() { window.open(g5_url, '_self') });
+$(document).bind('keydown', 'f', function() { window.open(g5_bbs_url + '/board.php?bo_table=free', '_self') });
+$(document).bind('keydown', 'n', function() { window.open(g5_bbs_url + '/board.php?bo_table=notice', '_self') });
+$(document).bind('keydown', 'q', function() { window.open(g5_bbs_url + '/board.php?bo_table=qa', '_self') });
+$(document).bind('keydown', 'p', function() { window.open(g5_bbs_url + '/board.php?bo_table=gallery', '_self') });
+$(document).bind('keydown', 'g', function() { window.open(g5_bbs_url + '/board.php?bo_table=tip', '_self') });
+$(document).bind('keydown', 'v', function() { window.open(g5_bbs_url + '/board.php?bo_table=review', '_self') });
+$(document).bind('keydown', 'h', function() { window.open(g5_bbs_url + '/board.php?bo_table=deal', '_self') });
+$(document).bind('keydown', 'x', function() { window.open(g5_bbs_url + '/board.php?bo_table=cloud', '_self') });
+$(document).bind('keydown', 'r', function() { window.open(g5_bbs_url + '/board.php?bo_table=recipe', '_self') });
+$(document).bind('keydown', 'l', function() { window.open(g5_bbs_url + '/board.php?bo_table=new', '_self') });
+$(document).bind('keydown', 'c', function() { window.open(g5_bbs_url + '/board.php?bo_table=lab', '_self') });
+$(document).bind('keydown', '1', function() { window.open(g5_url + '/html/calculator_recipe.php', '_self') });
+$(document).bind('keydown', '2', function() { window.open(g5_url + '/html/calculator_coil.php', '_self') });
+$(document).bind('keydown', '3', function() { window.open(g5_url + '/html/etc_address.php', '_self') });
+$(document).bind('keydown', 't', function() { window.open(g5_bbs_url + '/board.php?bo_table=trade', '_self') });
+$(document).bind('keydown', 'o', function() { window.open(g5_bbs_url + '/board.php?bo_table=offshop', '_self') });
+$(document).bind('keydown', 'd', function() { window.open(g5_bbs_url + '/board.php?bo_table=mod', '_self') });
+$(document).bind('keydown', 'u', function() { window.open(g5_bbs_url + '/board.php?bo_table=seller', '_self') });
+$(document).bind('keydown', 'z', function() { window.open(g5_bbs_url + '/board.php?bo_table=stock', '_self') });
+$(document).bind('keydown', 'y', function() { window.open(g5_bbs_url + '/board.php?bo_table=seller2', '_self') });
+$(document).bind('keydown', 'b', function() { window.open(g5_bbs_url + '/board.php?bo_table=starter_tip', '_self') });
+}
+
+if (g5_is_member)
+{
+    $(document).bind('keydown', 'm', function() { win_memo(g5_bbs_url + '/memo.php') });
+    $(document).bind('keydown', 's', function() { win_scrap(g5_bbs_url + '/scrap.php') });
+}
+
+/* jQuery(function($) {
+	$("#rtBanner").touchSlider({
+		autoplay:true,
+		delay:8000,
+		margin:0,
+		prev: ".rtBannerBtn .icMiniPrev",
+		next: ".rtBannerBtn .icMiniNext"
+	});
+}); */
+
+/* $('.topNotice').easyTicker({
+	direction: 'up',
+	easing: 'easeOutBounce',
+	speed: 500,
+	interval: 3000,
+	height: 'auto',
+	visible: 0,
+	mousePause: 1
+}); */
+</script>
+
+<!-- 콘텐츠 시작 { -->
+<div id="wrapper">
+    <div id="container">
+        
+        <!-- 사이드 -->
+        
+<div id="sidePannel">
+    <!-- 바로가기 -->
+    <div id="sideMenu">
+        <ul>
+            <li class="sideTitle"><strong>커뮤니티</strong></li>
+            <li><a href='/bbs/board.php?bo_table=notice'>공지사항</a></li>
+            <li class='pickup' >
+            <a href='/bbs/board.php?bo_table=free'>자유게시판</a></li>
+            <li><a href='/bbs/board.php?bo_table=qa'>질문답변</a></li>
+            <li><a href='/bbs/board.php?bo_table=gallery'>포토</a></li>
+            <li><a href='/bbs/board.php?bo_table=cloud'>클라우드</a></li>        
+       </ul>
+    </div>
+
+    <!-- 인기글 -->
+      <!--   <div id="sideBest">
+        <ul>
+            <li class="sideTitle"><strong>커뮤니티 인기글</strong></li>
+            <li><a href='http://evape.kr/bbs/board.php?bo_table=free&wr_id=1164259'>아 액상 처치곤란<span class="cnt_cmt">+27</span></a></li><li><a href='http://evape.kr/bbs/board.php?bo_table=free&wr_id=1164007'>여러분...<span class="cnt_cmt">+66</span></a></li><li><a href='http://evape.kr/bbs/board.php?bo_table=free&wr_id=1163976'>모드기 수리해주시는…<span class="cnt_cmt">+34</span></a></li><li><a href='http://evape.kr/bbs/board.php?bo_table=free&wr_id=1163605'>니코틴에 대한 영상…<span class="cnt_cmt">+35</span></a></li><li><a href='http://evape.kr/bbs/board.php?bo_table=free&wr_id=1163325'>리모2 물건이였네요…<span class="cnt_cmt">+55</span></a></li>        </ul>
+    </div> -->
+        
+    <!-- <div id='sideBanner2'>
+        <a href="http://smokylab.co.kr" target="_blank"/><img src="http://evape.kr/img/banner/smokylab_160630.jpg" width="160" height="160" /></a> -->
+    <!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+    <!-- 2015/09/07 게시판 사이드 -->
+    <!--<ins class="adsbygoogle"
+         style="display:inline-block;width:160px;height:160px"
+         data-ad-client="ca-pub-5127498998858181"
+         data-ad-slot="2312829202"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>-->
+    </div>
+
+    <!-- 최근글 -->
+      <!--   <div id="sideLast">
+        <ul>
+            <li class="sideTitle"><strong>커뮤니티 최근글</strong></li>
+            <li><a href='http://evape.kr/bbs/board.php?bo_table=free&wr_id=1164475'>프랑켄스컬 클론... 굿</a></li><li><a href='http://evape.kr/bbs/board.php?bo_table=gallery&wr_id=122901'>도기 핸첵<span class="cnt_cmt">+1</span></a></li><li><a href='http://evape.kr/bbs/board.php?bo_table=free&wr_id=1164459'>패텍에...<span class="cnt_cmt">+8</span></a></li><li><a href='http://evape.kr/bbs/board.php?bo_table=qa&wr_id=239445'>쿨민트-cap 를대신할…</a></li><li><a href='http://evape.kr/bbs/board.php?bo_table=cloud&wr_id=34521'>곰돌이 후드티(후방…<span class="cnt_cmt">+2</span></a></li>        </ul>
+    </div> -->
+        <!-- 최근댓글 -->
+        
+     <!-- <div id="sidePoll">
+        <ul>
+            <li class="sideTitle"><strong>설문조사</strong></li>
+            <li>
+설문조사 시작 {
+<form name="fpoll" action="http://evape.kr/bbs/poll_update.php" onsubmit="return fpoll_submit(this);" method="post">
+<input type="hidden" name="po_id" value="7">
+<input type="hidden" name="skin_dir" value="basic">
+<div id="poll">
+	<p class="title">나의 주기기는 바로!</p>
+	    <p><input type="radio" name="gb_poll" value="1" id="gb_poll_1"> <label for="gb_poll_1">메카니컬 모드이다</label></p>
+        <p><input type="radio" name="gb_poll" value="2" id="gb_poll_2"> <label for="gb_poll_2">가변 모드이다</label></p>
+    </div>
+<div id='pollBtn'>
+    <a class="pollOk" onclick="$('[name=fpoll]').submit(); return false;">투표하기</a>
+    <a class="pollView" href="http://evape.kr/bbs/poll_result.php?po_id=7&amp;skin_dir=basic" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
+</div>
+</form> 
+
+<script>
+function fpoll_submit(f)
+{
+     alert('권한 2 이상의 회원만 투표에 참여하실 수 있습니다.'); return false; 
+    var chk = false;
+    for (i=0; i<f.gb_poll.length;i ++) {
+        if (f.gb_poll[i].checked == true) {
+            chk = f.gb_poll[i].value;
+            break;
+        }
+    }
+
+    if (!chk) {
+        alert("투표하실 설문항목을 선택하세요");
+        return false;
+    }
+
+    var new_win = window.open("about:blank", "win_poll", "width=616,height=500,scrollbars=yes,resizable=yes");
+    f.target = "win_poll";
+
+    return true;
+}
+
+function poll_result(url)
+{
+     alert('권한 2 이상의 회원만 결과를 보실 수 있습니다.'); return false; 
+    win_poll(url);
+}
+</script>
+<!-- } 설문조사 끝 -->
+     
+   
+
+    <!--<div id='sideSSL'>
+        <img src="http://evape.kr/img/cot_evssl.gif">
+    </div>-->
+
+
+<div id="mainContent">
+
+<script src="http://evape.kr/js/viewimageresize.js"></script>
+<script src="http://evape.kr/js/html5media.min.js"></script>
+
+<!-- 게시물 읽기 시작 { -->
+<div id="bo_v_table">자유게시판</div>
+
+<article id="bo_v" style="width:100%">
+    <header>
+                <img src='../resources/images/nobody.png' width="64" height="64" alt="회원아이콘" style='float:left;width:64px;vertical-align:top;margin-right:15px;border:1px solid #464955' />
+       	
+        <h1 id="bo_v_title">${articleVO.art_title}</h1>
+    </header>
+
+    <section id="bo_v_info">
+        <h2>페이지 정보</h2>
+        <strong><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=yoshiking" class="sv_member" title="${articleVO.user_name} 자기소개" target="_blank" onclick="return false;">${articleVO.user_name}</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=yoshiking" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=yoshiking" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=yoshiking">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=yoshiking">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=yoshiking" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=yoshiking" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=yoshiking">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=yoshiking">전체게시물</a>
+</span>
+</noscript></span>&nbsp;(61.*.136.2)</strong>
+        <span class="sound_only">작성일</span>
+        <strong>
+            ${articleVO.art_regdate}                    </strong>
+        조회<strong>${articleVO.art_readcount}</strong>
+        댓글<strong>${articleVO.art_comcount}</strong>
+    </section>
+
+    
+    
+	
+<!-- 게시물 상단 버튼 시작 { -->
+<div id="bo_v_top">
+	<!-- 	<ul class="bo_v_nb">
+					<li><a href="./board.php?bo_table=free&amp;wr_id=1164459" class="btn_b01">다음</a></li>		</ul> -->
+
+	<ul class="bo_v_com">
+												<!---->
+		<li><a href="javascript:history.back()" class="btn_b01">목록</a></li>
+		<!--  -->
+			</ul>
+	</div>
+<!-- } 게시물 상단 버튼 끝 -->
+    <section id="bo_v_atc">
+        <h2 id="bo_v_atc_title">본문</h2>
+
+        <div id="bo_v_img">
+</div>
+
+        <!-- 본문 내용 시작 { -->
+        <div id="bo_v_con"><p>${articleVO.art_content}</p></div>
+                <!-- } 본문 내용 끝 -->
+
+        
+        <!-- 스크랩 추천 반대 시작 { -->
+                <div id="bo_v_act">
+            <span class="btn2 btn2_blue btn2_square">추천 <strong>${articleVO.art_good}</strong></span>                    </div>
+                <!-- } 스크랩 추천 반대 끝 -->
+    </section>
+
+    
+
+<!-- <ul id="bo_v_sns">
+    <li><a href="http://evape.kr/bbs/sns_send.php?longurl=http%3A%2F%2Fevape.kr%2Fbbs%2Fboard.php%3Fbo_table%3Dfree%26wr_id%3D1164475&amp;title=%ED%94%84%EB%9E%91%EC%BC%84%EC%8A%A4%EC%BB%AC+%ED%81%B4%EB%A1%A0...+%EA%B5%BF&amp;sns=facebook" target="_blank"><img src="http://evape.kr/plugin/sns/icon/facebook.png" alt="페이스북으로 보내기"></a></li>
+    <li><a href="http://evape.kr/bbs/sns_send.php?longurl=http%3A%2F%2Fevape.kr%2Fbbs%2Fboard.php%3Fbo_table%3Dfree%26wr_id%3D1164475&amp;title=%ED%94%84%EB%9E%91%EC%BC%84%EC%8A%A4%EC%BB%AC+%ED%81%B4%EB%A1%A0...+%EA%B5%BF&amp;sns=twitter" target="_blank"><img src="http://evape.kr/plugin/sns/icon/twitter.png" alt="트위터로 보내기"></a></li>
+    <li><a href="http://evape.kr/bbs/sns_send.php?longurl=http%3A%2F%2Fevape.kr%2Fbbs%2Fboard.php%3Fbo_table%3Dfree%26wr_id%3D1164475&amp;title=%ED%94%84%EB%9E%91%EC%BC%84%EC%8A%A4%EC%BB%AC+%ED%81%B4%EB%A1%A0...+%EA%B5%BF&amp;sns=gplus" target="_blank"><img src="http://evape.kr/plugin/sns/icon/gplus.png" alt="구글플러스로 보내기"></a></li>
+    </ul> -->
+
+	
+    <!-- 배너광고 -->
+	
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 2016/07/20 게시판읽기 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:875px;height:120px"
+     data-ad-client="ca-pub-5127498998858181"
+     data-ad-slot="6659669604"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    
+<script>
+// 글자수 제한
+var char_min = parseInt(0); // 최소
+var char_max = parseInt(0); // 최대
+</script>
+
+<!-- 댓글 시작 { -->
+<section id="bo_vc">
+    <h2>댓글 <span>${articleVO.art_comcount}</span>건</h2>
+        <p id="bo_vc_empty">등록된 댓글이 없습니다.</p>
+</section>
+<!-- } 댓글 끝 -->
+
+<!-- } 댓글 쓰기 끝 --><script src="http://evape.kr/js/md5.js"></script>
+
+    <!-- 링크 버튼 시작 { -->
+    <!-- <div id="bo_v_bot">
+        	<ul class="bo_v_nb">
+					<li><a href="./board.php?bo_table=free&amp;wr_id=1164459" class="btn_b01">다음</a></li>		</ul>
+
+	<ul class="bo_v_com">
+												
+		<li><a href="javascript:history.back()" class="btn_b01">목록</a></li>
+		
+			</ul>
+	    </div> -->
+    <!-- } 링크 버튼 끝 -->
+
+</article>
+<!-- } 게시판 읽기 끝 -->
+
+<script>
+
+function board_move(href)
+{
+    window.open(href, "boardmove", "left=50, top=50, width=500, height=550, scrollbars=1");
+}
+</script>
+
+<script>
+$(function() {
+    $("a.view_image").click(function() {
+        window.open(this.href, "large_image", "location=yes,links=no,toolbar=no,top=10,left=10,width=10,height=10,resizable=yes,scrollbars=no,status=no");
+        return false;
+    });
+
+    // 추천, 반대
+    $("#good_button, #nogood_button").click(function() {
+        var $tx;
+        if(this.id == "good_button")
+            $tx = $("#bo_v_act_good");
+        else
+            $tx = $("#bo_v_act_nogood");
+
+        excute_good(this.href, $(this), $tx);
+        return false;
+    });
+
+    // 이미지 리사이즈
+    $("#bo_v_atc").viewimageresize();
+});
+
+function excute_good(href, $el, $tx)
+{
+    $.post(
+        href,
+        { js: "on" },
+        function(data) {
+            if(data.error) {
+                alert(data.error);
+                return false;
+            }
+
+            if(data.count) {
+                $el.find("strong").text(number_format(String(data.count)));
+                if($tx.attr("id").search("nogood") > -1) {
+                    $tx.text("이 글을 반대하셨습니다.");
+                    $tx.fadeIn(200).delay(2500).fadeOut(200);
+                } else {
+                    $tx.text("이 글을 추천하셨습니다.");
+                    $tx.fadeIn(200).delay(2500).fadeOut(200);
+                }
+            }
+        }, "json"
+    );
+}
+
+$("#report_button").click(function() {
+    href = this.href;
+    $el = $(this);
+    $tx = $("#bo_v_act_report");
+
+    if (!confirm("선택한 게시물을 정말 신고하시겠습니까?\n\n주관적인 판단으로 허위신고할 경우 작성자에게 피해를 줄 수 있습니다."))
+        return false;
+
+    $.post(
+        href,
+        { js: "on" },
+        function(data) {
+            if(data.error) {
+                alert(data.error);
+                return false;
+            }
+
+            if(data.count) {
+                $el.find("strong").text(number_format(String(data.count)));
+
+                //$tx.text("이 글을 신고하셨습니다.");
+                //$tx.fadeIn(200).delay(2500).fadeOut(200);
+            }
+        }, "json"
+    );
+    return false;
+});
+
+$("#bo_v_con a").each(function () {
+	$(this).attr("target", "_blank");
+});
+</script>
+<!-- } 게시글 읽기 끝 -->
+<!-- <h2 id="container_title">
+    <span style='vertical-align:middle'>자유게시판</span>
+    <span class="sound_only"> 목록</span>
+    <a href="./rss.php?bo_table=free" target="_blank"><img src='http://evape.kr/img/rss.png' width='12' /></a>	</h2> -->
+
+<!-- 게시판 목록 시작 { -->
+<%-- <div id="bo_list" style="width:100%">
+
+    <!-- 게시판 카테고리 시작 { -->
+    <nav id="bo_cate">
+        <h2>자유게시판 카테고리</h2>
+        <ul id="bo_cate_ul">
+			<li><a href="" id="bo_cate_on">전체</a></li>			<li>
+                <select onchange="location.assign('./board.php?' + this.value);" style='margin:0 0 0 -1px;height:27px;width:92px'>
+                    <option value="bo_table=free&amp;sop=and&amp;sst=&amp;sod=desc&amp;sfl=&amp;stx=&amp;page=1" >기본정렬</option>
+                    <option value="bo_table=free&amp;sop=and&amp;sst=wr_hit&amp;sod=desc&amp;sfl=&amp;stx=&amp;page=1" >조회많은순</option>
+                    <option value="bo_table=free&amp;sop=and&amp;sst=wr_good&amp;sod=desc&amp;sfl=&amp;stx=&amp;page=1" >추천많은순</option>
+                    <option value="bo_table=free&amp;sop=and&amp;sst=wr_comment&amp;sod=desc&amp;sfl=&amp;stx=&amp;page=1" >댓글많은순</option>
+                </select>
+            </li>
+        </ul>
+    </nav>
+    <!-- } 게시판 카테고리 끝 -->
+	
+    <!-- 게시판 페이지 정보 및 버튼 시작 { -->
+    <div class="bo_fx">
+        <div id="bo_list_total">
+                        <span>전체 83,171건</span>
+            1 페이지
+        </div>
+
+                <ul class="btn_bo_user">
+			                                </ul>
+            </div>
+    <!-- } 게시판 페이지 정보 및 버튼 끝 -->
+
+    <form name="fboardlist" id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
+    <input type="hidden" name="bo_table" value="free">
+    <input type="hidden" name="sfl" value="">
+    <input type="hidden" name="stx" value="">
+    <input type="hidden" name="spt" value="">
+    <input type="hidden" name="sst" value="wr_num">
+    <input type="hidden" name="sod" value="">
+    <input type="hidden" name="sca" value="">
+    <input type="hidden" name="page" value="1">
+    <input type="hidden" name="sw" value="">
+
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>자유게시판 목록</caption>
+        <!--
+        <thead>
+        <tr>
+            <th scope="col">번호</th>
+                        <th scope="col" style='text-align:left;padding-left:8px'>제목</th>
+            <th scope="col" style='text-align:right;padding-left:8px'>글쓴이</th>
+            <th scope="col"><a href="/bbs/board.php?bo_table=free&amp;sop=and&amp;sst=wr_datetime&amp;sod=desc&amp;sfl=&amp;stx=&amp;page=1">날짜</a></th>
+            <th scope="col"><a href="/bbs/board.php?bo_table=free&amp;sop=and&amp;sst=wr_hit&amp;sod=desc&amp;sfl=&amp;stx=&amp;page=1">조회</a></th>
+            <th scope="col"><a href="/bbs/board.php?bo_table=free&amp;sop=and&amp;sst=wr_good&amp;sod=desc&amp;sfl=&amp;stx=&amp;page=1">추천</a></th>        </tr>
+        </thead>
+        -->
+        <tbody>
+		                <tr class="bo_notice">
+            <td class="td_num">
+            <strong>공지</strong>            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1163188" style='color:#ff0000;font-weight:bold'>
+					[Heaven Gifts]200W IJOY RDTA BOX에 도전하시고 30%할인의 크리스마…					<span class="sound_only">댓글</span><span class="cnt_cmt">+94</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글"><img src="http://evape.kr/skin/board/basic/img/icon_file.gif" alt="첨부파일">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=HeavenGifts" class="sv_member" title="HeavenGifts 자기소개" target="_blank" onclick="return false;"> HeavenGifts</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=HeavenGifts" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=HeavenGifts" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=HeavenGifts">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=HeavenGifts">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=HeavenGifts" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=HeavenGifts" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=HeavenGifts">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=HeavenGifts">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				12-13			</td>
+            <td class="td_num">486</td>
+            <td class="td_num">2</td>            <!---->
+        </tr>
+                <tr class="bo_notice">
+            <td class="td_num">
+            <strong>공지</strong>            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=552440" >
+					여기는 하릴없이 택배를 기다리는 베이퍼들이 수다를 떠는 공간입니다.					<span class="sound_only">댓글</span><span class="cnt_cmt">+39</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_hot.gif" alt="인기글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" class="sv_member" title="이베이프 자기소개" target="_blank" onclick="return false;"> 이베이프</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=byunjaeil" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=byunjaeil">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=byunjaeil">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=byunjaeil" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=byunjaeil">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=byunjaeil">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				10-01			</td>
+            <td class="td_num">8928</td>
+            <td class="td_num">17</td>            <!---->
+        </tr>
+                <tr class="bo_notice">
+            <td class="td_num">
+            <strong>공지</strong>            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=312" >
+					건의사항 및 버그신고					<span class="sound_only">댓글</span><span class="cnt_cmt">+311</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_hot.gif" alt="인기글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" class="sv_member" title="이베이프 자기소개" target="_blank" onclick="return false;"> 이베이프</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=byunjaeil" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=byunjaeil">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=byunjaeil">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=byunjaeil" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=byunjaeil">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=byunjaeil">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				01-23			</td>
+            <td class="td_num">10809</td>
+            <td class="td_num">6</td>            <!---->
+        </tr>
+                <tr class="bo_notice">
+            <td class="td_num">
+            <strong>공지</strong>            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=55183" >
+					커뮤니티 이용규칙 (2016/06/30 갱신)					<span class="sound_only">댓글</span><span class="cnt_cmt">+121</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_hot.gif" alt="인기글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" class="sv_member" title="이베이프 자기소개" target="_blank" onclick="return false;"> 이베이프</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=byunjaeil" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=byunjaeil">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=byunjaeil">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=byunjaeil" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=byunjaeil">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=byunjaeil">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				03-28			</td>
+            <td class="td_num">10237</td>
+            <td class="td_num">25</td>            <!---->
+        </tr>
+                <tr class="bo_notice">
+            <td class="td_num">
+            <strong>공지</strong>            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1011288" >
+					이베이프 업데이트 내역 (2016/09/29 갱신)					<span class="sound_only">댓글</span><span class="cnt_cmt">+24</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_hot.gif" alt="인기글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" class="sv_member" title="이베이프 자기소개" target="_blank" onclick="return false;"> 이베이프</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=byunjaeil" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=byunjaeil">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=byunjaeil">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=byunjaeil" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=byunjaeil" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=byunjaeil">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=byunjaeil">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				07-16			</td>
+            <td class="td_num">1721</td>
+            <td class="td_num">3</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            <span class="bo_current">열람중</span>            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164475" >
+					프랑켄스컬 클론... 굿									</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=yoshiking" class="sv_member" title="yoshiking 자기소개" target="_blank" onclick="return false;"> yoshiking</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=yoshiking" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=yoshiking" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=yoshiking">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=yoshiking">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=yoshiking" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=yoshiking" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=yoshiking">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=yoshiking">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				11:24			</td>
+            <td class="td_num">12</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83165            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164459" >
+					패텍에...					<span class="sound_only">댓글</span><span class="cnt_cmt">+8</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글"><img src="http://evape.kr/skin/board/basic/img/icon_file.gif" alt="첨부파일">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=lex2jzge" class="sv_member" title="푼탱이 자기소개" target="_blank" onclick="return false;"> 푼탱이</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=lex2jzge" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=lex2jzge" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=lex2jzge">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=lex2jzge">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=lex2jzge" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=lex2jzge" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=lex2jzge">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=lex2jzge">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				11:02			</td>
+            <td class="td_num">117</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83164            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164427" >
+					두근두근 2시에 첫 김장입니다					<span class="sound_only">댓글</span><span class="cnt_cmt">+8</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=im1503" class="sv_member" title="베이퍼옴므 자기소개" target="_blank" onclick="return false;"> 베이퍼옴므</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=im1503" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=im1503" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=im1503">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=im1503">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=im1503" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=im1503" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=im1503">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=im1503">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				09:48			</td>
+            <td class="td_num">115</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83163            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164415" >
+					바이퍼 V3 폐호흡 후기 갑자기 무화량과 새로운 맛이....					<span class="sound_only">댓글</span><span class="cnt_cmt">+5</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=gdmer" class="sv_member" title="얼빵이소년 자기소개" target="_blank" onclick="return false;"> 얼빵이소년</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=gdmer" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=gdmer" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=gdmer">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=gdmer">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=gdmer" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=gdmer" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=gdmer">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=gdmer">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				09:12			</td>
+            <td class="td_num">163</td>
+            <td class="td_num">1</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83162            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164414" >
+					유니콘 푸크 샴록 쉐이크..					<span class="sound_only">댓글</span><span class="cnt_cmt">+2</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=seodachan" class="sv_member" title="데이츠 자기소개" target="_blank" onclick="return false;"> 데이츠</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=seodachan" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=seodachan" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=seodachan">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=seodachan">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=seodachan" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=seodachan" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=seodachan">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=seodachan">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				09:08			</td>
+            <td class="td_num">103</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83161            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164409" >
+					신도림 출발신호 정지..					<span class="sound_only">댓글</span><span class="cnt_cmt">+5</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=ezrhyme" class="sv_member" title="나태한목소리 자기소개" target="_blank" onclick="return false;"> 나태한목소리</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=ezrhyme" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=ezrhyme" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=ezrhyme">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=ezrhyme">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=ezrhyme" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=ezrhyme" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=ezrhyme">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=ezrhyme">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				08:48			</td>
+            <td class="td_num">198</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83160            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164398" >
+					하하하하 김장 또 망했어!!!ㅎㅎㅎㅎ					<span class="sound_only">댓글</span><span class="cnt_cmt">+8</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글"><img src="http://evape.kr/skin/board/basic/img/icon_file.gif" alt="첨부파일">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=ak47man" class="sv_member" title="하루3갑 자기소개" target="_blank" onclick="return false;"> 하루3갑</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=ak47man" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=ak47man" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=ak47man">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=ak47man">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=ak47man" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=ak47man" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=ak47man">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=ak47man">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				04:59			</td>
+            <td class="td_num">278</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83159            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164371" >
+					결정장애ㅡㅡ					<span class="sound_only">댓글</span><span class="cnt_cmt">+9</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글"><img src="http://evape.kr/skin/board/basic/img/icon_file.gif" alt="첨부파일">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=skye65" class="sv_member" title="skye65 자기소개" target="_blank" onclick="return false;"> skye65</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=skye65" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=skye65" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=skye65">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=skye65">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=skye65" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=skye65" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=skye65">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=skye65">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				03:17			</td>
+            <td class="td_num">280</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83158            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164365" >
+					엔엠코일이 생각보다 싼거네요					<span class="sound_only">댓글</span><span class="cnt_cmt">+12</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=slugang" class="sv_member" title="슬러갱 자기소개" target="_blank" onclick="return false;"> 슬러갱</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=slugang" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=slugang" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=slugang">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=slugang">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=slugang" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=slugang" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=slugang">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=slugang">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				03:00			</td>
+            <td class="td_num">366</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83157            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164361" >
+					겨우겨우 이쥬스딜 액상폐기 ...					<span class="sound_only">댓글</span><span class="cnt_cmt">+3</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=handy009" class="sv_member" title="뙈랑이 자기소개" target="_blank" onclick="return false;"> 뙈랑이</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=handy009" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=handy009" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=handy009">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=handy009">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=handy009" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=handy009" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=handy009">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=handy009">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				02:40			</td>
+            <td class="td_num">240</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83156            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164360" >
+					혹시 롤 하실분???ㅋㅋㅋ					<span class="sound_only">댓글</span><span class="cnt_cmt">+1</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=rkdktj" class="sv_member" title="앤트맨 자기소개" target="_blank" onclick="return false;"> 앤트맨</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=rkdktj" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=rkdktj" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=rkdktj">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=rkdktj">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=rkdktj" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=rkdktj" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=rkdktj">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=rkdktj">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				02:36			</td>
+            <td class="td_num">119</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83155            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164346" >
+					두둥!					<span class="sound_only">댓글</span><span class="cnt_cmt">+6</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글"><img src="http://evape.kr/skin/board/basic/img/icon_file.gif" alt="첨부파일">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=kr9071" class="sv_member" title="RedSharks 자기소개" target="_blank" onclick="return false;"> RedSharks</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=kr9071" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=kr9071" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=kr9071">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=kr9071">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=kr9071" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=kr9071" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=kr9071">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=kr9071">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				01:19			</td>
+            <td class="td_num">277</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83154            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164345" >
+					쓰췍!					<span class="sound_only">댓글</span><span class="cnt_cmt">+4</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글"><img src="http://evape.kr/skin/board/basic/img/icon_file.gif" alt="첨부파일">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=brucekym" class="sv_member" title="브루스킴 자기소개" target="_blank" onclick="return false;"> 브루스킴</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=brucekym" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=brucekym" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=brucekym">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=brucekym">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=brucekym" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=brucekym" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=brucekym">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=brucekym">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				01:15			</td>
+            <td class="td_num">235</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83153            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164259" >
+					아 액상 처치곤란					<span class="sound_only">댓글</span><span class="cnt_cmt">+27</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=slugang" class="sv_member" title="슬러갱 자기소개" target="_blank" onclick="return false;"> 슬러갱</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=slugang" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=slugang" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=slugang">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=slugang">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=slugang" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=slugang" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=slugang">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=slugang">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				00:36			</td>
+            <td class="td_num">503</td>
+            <td class="td_num">3</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83152            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164252" >
+					의뢰품 마감하고 왔습니다					<span class="sound_only">댓글</span><span class="cnt_cmt">+3</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글"><img src="http://evape.kr/skin/board/basic/img/icon_file.gif" alt="첨부파일">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=a0573a" class="sv_member" title="체꽃 자기소개" target="_blank" onclick="return false;"> 체꽃</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=a0573a" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=a0573a" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=a0573a">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=a0573a">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=a0573a" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=a0573a" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=a0573a">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=a0573a">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				00:33			</td>
+            <td class="td_num">324</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                <tr class="">
+            <td class="td_num">
+            83151            </td>
+                        <td class="td_subject">
+				                <div style='display:inline-block'>
+				                				<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164243" >
+					터그보트 af 좋네요					<span class="sound_only">댓글</span><span class="cnt_cmt">+15</span><span class="sound_only">개</span>				</a>
+				<img src="http://evape.kr/skin/board/basic/img/icon_new.gif" alt="새글"><img src="http://evape.kr/skin/board/basic/img/icon_file.gif" alt="첨부파일">				</div>
+			</td>
+            <td class="td_name sv_use"><span class="sv_wrap">
+<a href="http://evape.kr/bbs/profile.php?mb_id=power1430" class="sv_member" title="이고원이거원 자기소개" target="_blank" onclick="return false;"> 이고원이거원</a>
+<span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=power1430" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=power1430" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=power1430">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=power1430">전체게시물</a>
+</span>
+
+<noscript class="sv_nojs"><span class="sv">
+<a href="http://evape.kr/bbs/memo_form.php?me_recv_mb_id=power1430" onclick="win_memo(this.href); return false;">쪽지보내기</a>
+<a href="http://evape.kr/bbs/profile.php?mb_id=power1430" onclick="win_profile(this.href); return false;">자기소개</a>
+<a href="http://evape.kr/bbs/board.php?bo_table=free&amp;sca=&amp;sfl=mb_id,1&amp;stx=power1430">아이디로 검색</a>
+<a href="http://evape.kr/bbs/new.php?mb_id=power1430">전체게시물</a>
+</span>
+</noscript></span></td>
+            <td class="td_date" >
+				00:30			</td>
+            <td class="td_num">247</td>
+            <td class="td_num">0</td>            <!---->
+        </tr>
+                        </tbody>
+        </table>
+    </div>
+
+        </form>
+</div> --%>
+
+
+<!-- 페이지 -->
+<!-- <nav class="pg_wrap"><span class="pg"><span class="sound_only">열린</span><strong class="pg_current">1</strong><span class="sound_only">페이지</span><a href="./board.php?bo_table=free&amp;page=2" class="pg_page">2<span class="sound_only">페이지</span></a><a href="./board.php?bo_table=free&amp;page=3" class="pg_page">3<span class="sound_only">페이지</span></a><a href="./board.php?bo_table=free&amp;page=4" class="pg_page">4<span class="sound_only">페이지</span></a><a href="./board.php?bo_table=free&amp;page=5" class="pg_page">5<span class="sound_only">페이지</span></a><a href="./board.php?bo_table=free&amp;page=6" class="pg_page">6<span class="sound_only">페이지</span></a><a href="./board.php?bo_table=free&amp;page=7" class="pg_page">7<span class="sound_only">페이지</span></a><a href="./board.php?bo_table=free&amp;page=8" class="pg_page">8<span class="sound_only">페이지</span></a><a href="./board.php?bo_table=free&amp;page=9" class="pg_page">9<span class="sound_only">페이지</span></a><a href="./board.php?bo_table=free&amp;page=10" class="pg_page">10<span class="sound_only">페이지</span></a><a href="./board.php?bo_table=free&amp;page=11" class="pg_page pg_next">다음</a><a href="./board.php?bo_table=free&amp;page=3961" class="pg_page pg_end">끝페이지</a></span></nav> -->
+<!-- 게시판 검색 시작 { -->
+<!-- <fieldset id="bo_sch">
+    <legend>게시물 검색</legend>
+
+    <form name="fsearch" method="get">
+    <input type="hidden" name="bo_table" value="free">
+    <input type="hidden" name="sca" value="">
+    <input type="hidden" name="sop" value="and">
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl" class="frm_input">
+        <option value="wr_subject,1">제목</option>
+        <option value="wr_subject||wr_content,1">제목+내용</option>
+		<option value="wr_content,0">댓글</option>
+        <option value="mb_id,1">회원아이디</option>
+        <option value="mb_id,0">회원아이디(댓글)</option>
+        <option value="wr_name,1">글쓴이</option>
+        <option value="wr_name,0">글쓴이(댓글)</option>
+    </select>
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" value="" required id="stx" class="frm_input required" size="15" maxlength="20">
+    <input type="submit" value="검색" class="btn_submit">
+    </form>
+</fieldset> -->
+<!-- } 게시판 검색 끝 -->
+
+<!-- 배너광고 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 2016/07/20 게시판목록 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:875px;height:120px"
+     data-ad-client="ca-pub-5127498998858181"
+     data-ad-slot="5182936408"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<!-- } 게시판 목록 끝 -->
+	</div>    </div>
+</div>
+<!-- } 콘텐츠 끝 -->
+
+<!-- 하단 시작 { -->
+<div id="ft">
+	<!-- 알림 -->
+	<div id="nofity"></div>
+
+	<script type="text/javascript">
+	/*var evape_socket = io.connect('ws://evape.kr:1024');
+	var evape_data = { 
+		mb_id:'',
+		last:''
+	};
+	var alarm_snd = new Audio(g5_url + '/html/sound/beep.wav');
+
+	evape_socket.emit("checkData", evape_data);
+
+    // 쪽지/댓글 알림
+	if (g5_is_member)	{
+        evape_socket.on('getData', function (data) {
+            if(data != "false") {
+                if (data.type == "memo") {
+                    message = $("<p><a href='javascript:win_memo(\"" + data.url + "\")'>[쪽지알림] " + data.title + "</a></p>").hide();
+                } else
+                    message = $("<p><a href='" + data.url + "'>[댓글알림] " + data.title + "</a></p>").hide();
+                evape_data["last"] = data.id;
+                $.post(g5_url + "/html/ajax_session.php", {"last_node": data.id});
+                //alarm_snd.play();
+                $(message).appendTo($("#nofity")).slideDown('slow').delay('10000').slideUp('slow', function() {
+                    $(this).remove();
+                });
+            }
+            evape_socket.emit('checkData', evape_data);
+        });
+	}
+
+    //새글 알림
+    //if (g5_is_admin) {
+        evape_socket.on('getNewData', function (data) {
+            if(data != "false") {
+                message = $("<p><a href='" + data.url + "'>[새글알림] " + data.title + "</a></p>").hide();
+                evape_data["last"] = data.id;
+                $.post(g5_url + "/html/ajax_session.php", {"last_node": data.id});
+                //alarm_snd.play();
+                $(message).appendTo($("#nofity")).slideDown('slow').delay('10000').slideUp('slow', function() {
+                    $(this).remove();
+                });
+            }
+        });
+    //}*/
+    </script>
+
+            <!-- <div id="copyRight">
+        <div>
+            <a class="copyRule" href="http://evape.kr/html/about.php">어바웃이베이프</a>
+            <a class="copyRule" href="http://evape.kr/bbs/content.php?co_id=privacy">개인정보취급방침</a>
+            <a class="copyRule" href="http://evape.kr/bbs/content.php?co_id=provision">서비스이용약관</a>
+            <a class="copyRule" href="http://evape.kr/bbs/formmail.php?mb_id=byunjaeil&name=%EC%9D%B4%EB%B2%A0%EC%9D%B4%ED%94%84&email=Ynl1bmphZWlsQGdtYWlsLmNvbQ==" onclick="win_email(this.href); return false;">제휴문의</a>
+            <a class="copyRule" href="mailto:byunjaeil@gmail.com">제휴문의</a>
+            <p class="copyInfo">
+                이베이프의 사전 동의 없이 사이트내의 일체의 정보 및 컨텐츠를 상업적 목적으로<br />
+                전재, 전송, 스크래핑 등 무단 사용할 수 없습니다.
+            </p>
+			<p class="copyRightEvape">
+            사업자등록번호: 306-41-01666<br />
+			대표: 변재일<br />
+            Copyright &copy; <strong><a href="http://evape.kr" target="_blank">EVAPE</a> </strong>All rights reserved.
+            </p>
+        </div>
+    </div> -->
+</div>
+
+<div id="topUp">
+	<input id="scrollUp" type="button" title="TOP" class="iconBtn icTop">
+</div>
+
+<!-- <a id="device_change" href="http://evape.kr/bbs/board.php?bo_table=free&amp;wr_id=1164475&amp;device=mobile">모바일 버전으로 보기</a> -->
+
+<!-- } 하단 끝 -->
+
+<script>
+$(function() {
+    // 폰트 리사이즈 쿠키있으면 실행
+    font_resize("container", get_cookie("ck_font_resize_rmv_class"), get_cookie("ck_font_resize_add_class"));
+});
+
+//탑버튼
+$('#scrollUp').click(function() {
+    $('html, body').animate({scrollTop:0}, 200);
+    return false;
+});
+
+//툴팁
+$('[data-tooltip!=""]').each(function() { // Notice the .each() loop, discussed below
+    $(this).qtip({
+		content: {
+			title: { text: $(this).attr('title') },
+			attr: 'data-tooltip'
+		},
+		style: {
+			classes: 'qtip-light qtip-shadow'
+		},
+		position: {
+			my: 'top left',
+			at: 'bottom left',
+			target: $(this),
+            adjust: {
+                x: 4,
+                y: 4
+            }
+		}
+    });
+});
+</script>
+
+<!-- <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38118152-3', 'auto');
+  ga('send', 'pageview');
+
+</script> -->
+
+<!-- ie6,7에서 사이드뷰가 게시판 목록에서 아래 사이드뷰에 가려지는 현상 수정 -->
+<!--[if lte IE 7]>
+<script>
+$(function() {
+    var $sv_use = $(".sv_use");
+    var count = $sv_use.length;
+
+    $sv_use.each(function() {
+        $(this).css("z-index", count);
+        $(this).css("position", "relative");
+        count = count - 1;
+    });
+});
+</script>
+<![endif]-->
+
+</body>
+</html>
+
+<!-- 사용스킨 : basic -->
